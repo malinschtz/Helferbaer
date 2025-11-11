@@ -8,13 +8,13 @@ nav_order: 0
 >
 > You may delete this `attention` box.
 
-# [Project Name]
+# Helferbär
 
 [Project description]
 
 ## Team members
 
-### [Jane Dane]
+### Malin Schütz
 
 About
 : Some info about Jane
@@ -22,7 +22,7 @@ About
 Matr.-Nr.
 : 1234567
 
-### [Joe Doe]
+### Alisa Puzo
 
 About
 : Some info about Joe
