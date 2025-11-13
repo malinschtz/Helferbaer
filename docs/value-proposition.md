@@ -26,11 +26,11 @@ Unsere Plattform schafft eine zentrale, benutzerfreundliche Umgebung für Kommun
 
 ## Target user
 
-1. Pflegebedürftige Person – Anna Müller, 64 Jahre
+1. Pflegebedürftige Person – Anna Müller, 64 Jahre  
 Anna lebt allein und erhält Unterstützung im Haushalt und bei Erledigungen. Sie möchte ihre Termine und Hilfsleistungen einfach digital im Blick behalten und sicher mit ihren Helfern kommunizieren, ohne auf Telefonate oder handgeschriebene Notizen angewiesen zu sein.
 
-2. Alltagshelfer – Leonie Fillon, 23 Jahre
-Leonie arbeitet als selbstständiger Alltagshelferin und betreut mehrere Klient:innen pro Woche. Sie möchte ihre Einsätze übersichtlich planen, Änderungen schnell abstimmen und klare Informationen zu Aufgaben erhalten und das alles an einem zentralen Ort, statt über viele verschiedene Kanäle.
+2. Alltagshelfer – Leonie Fillon, 23 Jahre  
+Leonie arbeitet als selbstständige Alltagshelferin und betreut mehrere Klient:innen pro Woche. Sie möchte ihre Einsätze übersichtlich planen, Änderungen schnell abstimmen und klare Informationen zu Aufgaben erhalten und das alles an einem zentralen Ort, statt über viele verschiedene Kanäle.
 
 ## Customer journey
 
