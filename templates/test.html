@@ -3,21 +3,38 @@
   <head>
     <title>Helferbär</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Donegal+One|Palanquin">
+    <link rel="stylesheet" href="../static/css/reset.css">
+    <link rel="stylesheet" href="../static/css/colors.css">
     <link rel="stylesheet" href="../static/css/style_test.css">
   </head>
   <body>
-    <header>
-        <h1>Helferbär</h1>
+    <header class="topbar">
+      <div class="logo">Helferbär</div>
+      <nav class="navi">
+        <a href="/contact">Kontakt</a>
+        <a href="/faq">FAQ</a>
+      </nav>
     </header>
-
-    <main class="content">
-      <h1>Willkommen bei Helferbär!</h1>
-        <p>Ich bin Alltagshelfer.</p>
-            <button>Anmelden</button>
-            <button>Registrieren</button>
-      <p>Ich brauche Hilfe im Alltag.</p>
-            <button>Anmelden</button>
-            <button>Registrieren</button>
+    <main>
+      <div class="left">
+        <div class="box">
+          <p>Ich bin Alltagshelfer.</p>
+          <form method="post">
+            <button type="submit" name="helfer" value="login" id="btn-login_h">Anmelden</button>
+            <button type="submit" name="helfer" value="register" id="btn-register_h">Registrieren</button>
+          </form>
+        </div>
+        <div class="box">
+          <p>Ich brauche Hilfe im Alltag.</p>
+          <form method="post">
+            <button type="submit" name="kunde" value="login" id="btn-login_k">Anmelden</button>
+            <button type="submit" name="kunde" value="register" id="btn-register_k">Registrieren</button>
+          </form>
+        </div>
+      </div>
+      <div class="right">
+        <img src="../static/images/helferbaer_logo.png" alt="logo">
+      </div>
     </main>
   </body>
 </html>
