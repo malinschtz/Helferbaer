@@ -1,26 +1,86 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def index():
-    return 'Hello, World!'
-
-@app.route('/test/', methods=["GET", "POST"])
-def test():
     if request.method == "POST":
         if "helfer" in request.form:
             action = request.form["helfer"]
             if action == "login":
-                return "Helfer Login ausgewählt"
+                return redirect(url_for("helfer_anmelden"))
             elif action == "register":
-                return "Helfer Registrierung ausgewählt"
+                return redirect(url_for("helfer_registrieren"))
 
         if "kunde" in request.form:
             action = request.form["kunde"]
             if action == "login":
-                return "Kunde Login ausgewählt"
+                return redirect(url_for("kunde_anmelden"))
             elif action == "register":
-                return "Kunde Registrierung ausgewählt"
+                return redirect(url_for("kunde_registrieren"))
     
-    return render_template('test.html')
+    return render_template('index.html')
+
+@app.route('/helfer/', methods=["GET", "POST"])
+def helfer():
+    if request.method == "POST":
+        return
+    return "Helfer Startseite"
+
+@app.route('/helfer/anmelden', methods=["GET", "POST"])
+def helfer_anmelden():
+    if request.method == "POST":
+        return
+    return "Helfer Anmeldeseite"
+
+@app.route('/helfer/registrieren', methods=["GET", "POST"])
+def helfer_registrieren():
+    if request.method == "POST":
+        return
+    return "Helfer Registrierseite"
+
+@app.route('/helfer/stellenangebot', methods=["GET", "POST"])
+def hlefer_stellenangebot():
+    if request.method == "POST":
+        return
+    return "Helfer Stellenangebote suchen"
+
+@app.route('/helfer/profil', methods=["GET", "POST"])
+def hlefer_profil():
+    if request.method == "POST":
+        return
+    return "Helfer Profil"
+
+@app.route('/kunde/', methods=["GET", "POST"])
+def kunde():
+    if request.method == "POST":
+        return
+    return "Kunde Startseite"
+
+@app.route('/kunde/anmelden', methods=["GET", "POST"])
+def kunde_anmelden():
+    if request.method == "POST":
+        return
+    return "Kunde Anmeldeseite"
+
+@app.route('/kunde/registrieren', methods=["GET", "POST"])
+def kunde_registrieren():
+    if request.method == "POST":
+        return
+    return "Kunde Registrierseite"
+
+@app.route('/kunde/stellenangebot', methods=["GET", "POST"])
+def kunde_stellenangebot():
+    if request.method == "POST":
+        return
+    return "Kunde Stellenangebot aufgeben"
+
+@app.route('/kunde/profil', methods=["GET", "POST"])
+def kunde_profil():
+    if request.method == "POST":
+        return
+    return "Kunde Profil"
+
+
+   
+
