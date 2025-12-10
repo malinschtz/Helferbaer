@@ -34,4 +34,4 @@ Leonie arbeitet als selbstständige Alltagshelferin und betreut mehrere Klient:i
 
 ## Customer journey
 
-[Illustrate the customer journey, from the app's entry point to a completed task. You might want to show the customer journey as (schematic) screen flows.]
+![get_list_todos_sample](assets/images/uiscreen-scribble.JPEG)
