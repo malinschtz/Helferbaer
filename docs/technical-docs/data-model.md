@@ -10,4 +10,5 @@ nav_order: 2
 # Data model
 
 
-## ![get_list_todos_sample](assets/images/datamodel.png)
+![Datamodel](../assets/images/datamodel.png)
+
