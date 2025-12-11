@@ -5,7 +5,6 @@ nav_order: 2
 ---
 
 {: .label }
-[Jane Dane]
 
 {: .no_toc }
 # Data model
@@ -17,4 +16,4 @@ nav_order: 2
 {: toc }
 </details>
 
-[Visualize and describe the data model(s) of your application. This description should match the actual implementation.]
+![get_list_todos_sample](assets/images/datamodel.png)
