@@ -1,0 +1,21 @@
+{% from 'bootstrap5/nav.html' import render_nav_item %}
+{% from 'bootstrap5/utils.html' import render_messages %}
+
+<!doctype html>
+<html lang=de>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block TITLE %}{% endblock %} - Helferbär</title>
+    {{ bootstrap.load_css() }}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Donegal+One|Palanquin">
+    <link rel="stylesheet" href="../static/css/reset.css">
+    <link rel="stylesheet" href="../static/css/colors.css">
+    <link rel="stylesheet" href="../static/css/style_test.css">
+</head>
+
+<body>
+
+    {{ bootstrap.load_js() }}
+</body>
