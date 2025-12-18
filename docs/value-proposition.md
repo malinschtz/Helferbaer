@@ -34,14 +34,14 @@ Leonie arbeitet als selbstständige Alltagshelferin und betreut mehrere Klient:i
 
 ## Customer journey
 
-1. Pflegebedürftige Person
+\1. Pflegebedürftige Person
 
 + Profil erstellen: Anna legt ihr Profil an.
 + Stellenangebot veröffentlichen: Sie erstellt ein Stellenangebot mit Beschreibung, Zeitraum und Kategorie.
 + Anfragen erhalten: Alltagshelfer sehen ihr Angebot und können sich direkt darauf bewerben. Anna bekommt Echtzeit-Benachrichtigungen.
 + Auswahl treffen: Anna prüft Profile der Helfer und kann Anfragen annehmen oder ablehnen. Nach Annahme wird der Termin als gebucht in ihren Anfragen angezeigt. 
 
-2. Alltagshelfer (Leonie) 
+\2. Alltagshelfer (Leonie) 
 
 + Profil anlegen: Leonie erstellt ihr Helferprofil.
 + Stellenangebote entdecken: Sie durchsucht die Angebotsliste und sieht passende Gesuche basierend auf Ort, Zeit und Kategorie.
