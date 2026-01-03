@@ -7,6 +7,8 @@ app.config.from_mapping(
     BOOTSTRAP_BOOTSWATCH_THEME = 'pulse'
 )
 
+from db import db, User, Category, Status, Job
+
 bootstrap = Bootstrap5(app) 
 
 @app.route('/', methods=['GET', 'POST'])

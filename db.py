@@ -1,6 +1,12 @@
-from flask_sqlalchemy import SQLAlchemy
+import click
+from flask_sqlalchemy import SQLAlchemy 
+from sqlalchemy import orm
+from app import app
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///helferbaer.sqlite' 
 
 db = SQLAlchemy()
+db.init_app(app)
  
 class User(db.Model):
     __tablename__ = "user"
@@ -14,14 +20,14 @@ class User(db.Model):
     role = db.Column(db.String, nullable=False)
 
     jobs_created = db.relationship(
-        "Job",
-        foreign_keys="Job.kundeId",
+        "job",
+        foreign_keys="job.kundeId",
         back_populates="kunde"
     )
 
     jobs_taken = db.relationship(
-        "Job",
-        foreign_keys="Job.helferId",
+        "job",
+        foreign_keys="job.helferId",
         back_populates="helfer"
     )
 
@@ -50,13 +56,15 @@ class Job(db.Model):
     realHours = db.Column(db.Float, default=None)
     
     kunde = db.relationship(
-        "User",
+        "user",
         foreign_keys=[kundeId],
         back_populates="jobs_created"
     )
 
     helfer = db.relationship(
-        "User",
+        "user",
         foreign_keys=[helferId],
         back_populates="jobs_taken"
     )
+
+with app.app_context(): db.create_all()
