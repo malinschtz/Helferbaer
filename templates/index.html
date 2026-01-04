@@ -1,40 +1,29 @@
-<!doctype html>
-<html lang="de">
-  <head>
-    <title>Helferbär</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Donegal+One|Palanquin">
-    <link rel="stylesheet" href="../static/css/reset.css">
-    <link rel="stylesheet" href="../static/css/colors.css">
-    <link rel="stylesheet" href="../static/css/style_test.css">
-  </head>
-  <body>
-    <header class="topbar">
-      <div class="logo">Helferbär</div>
-      <nav class="navi">
-        <a href="/contact">Kontakt</a>
-        <a href="/faq">FAQ</a>
-      </nav>
-    </header>
-    <main>
-      <div class="left">
-        <div class="box">
-          <p>Ich bin Alltagshelfer.</p>
-          <form method="post">
-            <button type="submit" name="helfer" value="login" id="btn-login_h">Anmelden</button>
-            <button type="submit" name="helfer" value="register" id="btn-register_h">Registrieren</button>
+{% extends "base.html" %}
+
+{% block TITLE %}Helferbär Startseite{% endblock %}
+
+{% block CONTENT %}
+<section class="hero d-flex align-items-center min-vh-100 bg-gradient position-relative overflow-hidden">
+  <div class="container-fluid px-5 px-lg-5">  
+    <div class="row align-items-center gx-5 gy-4">
+      <div class="col-lg-6 ps-lg-5">
+        <p class="lead mb-5 fs-2 text-white fw-light animate-fade-in-delay"> Finde schnell Hilfe im Alltag oder werde Helfer – einfach & lokal.</p>
+        <div class="mb-4">
+          <form method="post" class="d-inline">
+            <button name="helfer" value="login" class="btn btn-light btn-lg me-4 px-5 py-3 shadow-lg">👨‍🔧 Als Helfer anmelden</button>
+            <button name="helfer" value="register" class="btn btn-outline-light btn-lg px-5 py-3">👨‍🔧 Registrieren</button>
           </form>
         </div>
-        <div class="box">
-          <p>Ich brauche Hilfe im Alltag.</p>
-          <form method="post">
-            <button type="submit" name="kunde" value="login" id="btn-login_k">Anmelden</button>
-            <button type="submit" name="kunde" value="register" id="btn-register_k">Registrieren</button>
-          </form>
-        </div>
+        <form method="post">
+          <button name="kunde" value="login" class="btn btn-light btn-lg me-4 px-5 py-3 shadow-lg">👵 Hilfe benötigt</button>
+          <button name="kunde" value="register" class="btn btn-outline-light btn-lg px-5 py-3">👵 Registrieren</button>
+        </form>
       </div>
-      <div class="right">
-        <img src="../static/images/helferbaer_logo.png" alt="logo">
+      <div class="col-lg-6 text-center">
+        <img src="{{ url_for('static', filename='images/helferbaer_logo.png') }}" 
+             alt="Helferbär" class="img-fluid" style="max-height: 450px; filter: drop-shadow(0 30px 60px rgba(0,0,0,0.4));">
       </div>
-    </main>
-  </body>
-</html>
+    </div>
+  </div>
+</section>
+{% endblock %}
