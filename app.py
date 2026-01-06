@@ -40,13 +40,13 @@ def helfer():
 def helfer_anmelden():
     if request.method == 'POST':
         return
-    return 'Helfer Anmeldeseite'
+    return render_template('helfer_anmelden.html')
 
 @app.route('/helfer/registrieren', methods=['GET', 'POST'])
 def helfer_registrieren():
     if request.method == 'POST':
         return
-    return 'Helfer Registrierseite'
+    return render_template('helfer_registrieren.html')
 
 @app.route('/helfer/stellenangebot', methods=['GET', 'POST'])
 def hlefer_stellenangebot():
@@ -70,13 +70,13 @@ def kunde():
 def kunde_anmelden():
     if request.method == 'POST':
         return
-    return 'Kunde Anmeldeseite'
+    return render_template('kunde_anmelden.html')
 
 @app.route('/kunde/registrieren', methods=['GET', 'POST'])
 def kunde_registrieren():
     if request.method == 'POST':
         return
-    return 'Kunde Registrierseite'
+    return render_template('kunde_registrieren.html')
 
 @app.route('/kunde/stellenangebot', methods=['GET', 'POST'])
 def kunde_stellenangebot():

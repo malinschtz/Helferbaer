@@ -1,8 +1,13 @@
 :root {
-  --color-main: #929A9B;
-  --color-background: #465669;
-  --color-dark_shade: #242e39;
-  --color-light_shade: #EDEEEA;
-  --color-accent1: #828A79;
-  --color-accent2: #6A9E5B;
+  /* Flächen */
+  --color-background: #111827;   /* sehr dunkles Blau-Grau */
+  --color-main:        #1f2933;   /* Karten / Navbar-Hintergrund */
+  --color-dark_shade:  #0b1120;   /* noch dunkler für Footer, Ränder */
+
+  /* Text / Flächen hell */
+  --color-light_shade: #f9fafb;   /* Weiß / fast Weiß für Text und helle Buttons */
+
+  /* Akzente */
+  --color-accent1: #10b981;      /* smaragdgrün für Links, kleine Highlights */
+  --color-accent2: #6366f1;      /* Indigo für primäre Aktionen */
 }

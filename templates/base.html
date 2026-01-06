@@ -2,56 +2,59 @@
 {% from 'bootstrap5/utils.html' import render_messages %}
 
 <!doctype html>
-<html lang=de>
-
+<html lang="de">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block TITLE %}Helferbär{% endblock %}</title>
-    {{ bootstrap.load_css() }}
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Donegal+One|Palanquin">
-    <link rel="stylesheet" href="../static/css/colors.css">
-    <link rel="stylesheet" href="../static/css/style_test.css">
-    {% block styles %}{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block TITLE %}Helferbär{% endblock %}</title>
+
+  {{ bootstrap.load_css() }}
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Donegal+One|Palanquin">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/colors.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style_test.css') }}">
+
+  {% block styles %}{% endblock %}
 </head>
-
-<body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#"><img src="/static/images/helferbaer_logo.png" alt="Logo" width="50" height="40" class="d-inline-block align-text-top"> Helferbär</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Dropdown
+    <body>
+        <nav class="navbar navbar-expand-lg bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ url_for('index') }}">
+                    <img src="{{ url_for('static', filename='images/helferbaer_logo.png') }}" 
+                    alt="Logo" width="40" height="32" class="d-inline-block align-text-top">Helferbär
                 </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                </li>
-            </ul>
-            </div>
-        </div>
-    </nav>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarMain" aria-controls="navbarMain"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-    <main style="padding: 0; margin: 0;">
+                <div class="collapse navbar-collapse" id="navbarMain">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        {{ render_nav_item('index', 'Home') }}
+                    </ul>
+                    <ul class="navbar-nav">
+                        {{ render_nav_item('helfer_anmelden', 'Helfer') }}
+                        {{ render_nav_item('kunde_anmelden', 'Kunde') }}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    <div class="container mt-3">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            {{ render_messages([{'tag': category, 'message': message}]) }}
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <main>
         {% block CONTENT %}{% endblock %}
     </main>
 
     {{ bootstrap.load_js() }}
-</body>
+    {% block scripts %}{% endblock %}
+    </body>
+</html>
