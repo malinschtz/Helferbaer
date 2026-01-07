@@ -41,17 +41,20 @@ def helfer():
 @app.route('/helfer/anmelden', methods=['GET', 'POST'])
 def helfer_anmelden():
     form = LoginForm()
-    if form.validate_on_submit():
+    if request.method == 'POST':
+        if form.validate():
         # ToDo Login Logik
-        flash('Login erfolgreich!', 'success')
-        return redirect(url_for('helfer'))
+            return redirect(url_for('helfer'))
     return render_template('helfer_anmelden.html', form=form)
 
 @app.route('/helfer/registrieren', methods=['GET', 'POST'])
 def helfer_registrieren():
+    form = RegisterForm()
     if request.method == 'POST':
-        return
-    return render_template('helfer_registrieren.html')
+        if form.validate():
+        # ToDo Register Logik
+            return redirect(url_for('helfer'))
+    return render_template('helfer_registrieren.html', form = form)
 
 @app.route('/helfer/stellenangebot', methods=['GET', 'POST'])
 def hlefer_stellenangebot():

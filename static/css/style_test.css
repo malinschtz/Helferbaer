@@ -58,6 +58,7 @@ body {
 .hero-logo {
   max-height: 450px;
   filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.4));
+  margin-top: 3rem;
 }
 
 .auth-page {
