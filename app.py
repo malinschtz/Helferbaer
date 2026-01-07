@@ -45,6 +45,8 @@ def helfer_anmelden():
         if form.validate():
         # ToDo Login Logik
             return redirect(url_for('helfer'))
+        else: 
+            flash('Anmeldung fehlgeschlagen', 'error')
     return render_template('helfer_anmelden.html', form=form)
 
 @app.route('/helfer/registrieren', methods=['GET', 'POST'])
@@ -56,7 +58,7 @@ def helfer_registrieren():
             return redirect(url_for('helfer'))
         else: 
             flash('Registrierung fehlgeschlagen', 'error')
-    return render_template('helfer_registrieren.html', form = form)
+    return render_template('helfer_registrieren.html', form=form)
 
 @app.route('/helfer/stellenangebot', methods=['GET', 'POST'])
 def hlefer_stellenangebot():
@@ -78,15 +80,25 @@ def kunde():
 
 @app.route('/kunde/anmelden', methods=['GET', 'POST'])
 def kunde_anmelden():
+    form = LoginForm()
     if request.method == 'POST':
-        return
-    return render_template('kunde_anmelden.html')
+        if form.validate():
+        # ToDo Login Logik
+            return redirect(url_for('kunde'))
+        else: 
+            flash('Anmeldung fehlgeschlagen', 'error')
+    return render_template('kunde_anmelden.html', form=form)
 
 @app.route('/kunde/registrieren', methods=['GET', 'POST'])
 def kunde_registrieren():
+    form = RegisterForm()
     if request.method == 'POST':
-        return
-    return render_template('kunde_registrieren.html')
+        if form.validate():
+        # ToDo Register Logik
+            return redirect(url_for('kunde'))
+        else: 
+            flash('Registrierung fehlgeschlagen', 'error')
+    return render_template('kunde_registrieren.html', form=form)
 
 @app.route('/kunde/stellenangebot', methods=['GET', 'POST'])
 def kunde_stellenangebot():

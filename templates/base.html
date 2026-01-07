@@ -39,12 +39,12 @@
             </div>
         </nav>
 
-    <main>
-        {{ render_messages(dismissible=True, dismiss_animate=True) }}
-        {% block CONTENT %}{% endblock %}
-    </main>
+        <main>
+            {{ render_messages(dismissible=True, dismiss_animate=True) }}
+            {% block CONTENT %}{% endblock %}
+        </main>
 
-    {{ bootstrap.load_js() }}
-    {% block scripts %}{% endblock %}
+        {{ bootstrap.load_js() }}
+        {% block scripts %}{% endblock %}
     </body>
 </html>
