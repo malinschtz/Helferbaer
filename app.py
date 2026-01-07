@@ -1,9 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_bootstrap import Bootstrap5
+from forms import LoginForm, RegisterForm
 
 app = Flask(__name__)
 
 app.config.from_mapping(
+    SECRET_KEY = 'secret_key_just_for_dev_environment',
     BOOTSTRAP_BOOTSWATCH_THEME = 'pulse'
 )
 
@@ -38,9 +40,12 @@ def helfer():
 
 @app.route('/helfer/anmelden', methods=['GET', 'POST'])
 def helfer_anmelden():
-    if request.method == 'POST':
-        return
-    return render_template('helfer_anmelden.html')
+    form = LoginForm()
+    if form.validate_on_submit():
+        # ToDo Login Logik
+        flash('Login erfolgreich!', 'success')
+        return redirect(url_for('helfer'))
+    return render_template('helfer_anmelden.html', form=form)
 
 @app.route('/helfer/registrieren', methods=['GET', 'POST'])
 def helfer_registrieren():
