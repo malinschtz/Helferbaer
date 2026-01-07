@@ -4,34 +4,34 @@ from wtforms.validators import InputRequired, Email, EqualTo, Length, Optional
 
 class LoginForm(FlaskForm):
     email = StringField("E-Mail", validators=[
-        InputRequired(message="Email erforderlich"),
-        Email(message="Bitte eine korrekte Email eingeben")
+        InputRequired(),
+        Email()
     ])
-    password = PasswordField("Passwort", validators=[InputRequired(message="Passwort erforderlich")])
+    password = PasswordField("Passwort", validators=[InputRequired()])
     submit = SubmitField("Anmelden")
 
 class RegisterForm(FlaskForm):
     firstName = StringField("Vorname", validators=[
-        InputRequired(message="Name erforderlich"), 
+        InputRequired(), 
         Length(min=2, max=50)
     ])
     name = StringField("Nachname", validators=[
-        InputRequired(message="Name erforderlich"), 
+        InputRequired(), 
         Length(min=2, max=50)
     ])
-    birthday = DateField("Geburtsdatum", validators=[InputRequired(message="Geburtsdatum erforderlich")])
+    birthday = DateField("Geburtsdatum", validators=[InputRequired()])
     email = StringField("E-Mail", validators=[
-        InputRequired(message="Email erforderlich"), 
-        Email(message="Bitte eine korrekte Email eingeben"),
+        InputRequired(), 
+        Email(),
         Length(min=6, max=120)
     ])
     phone = StringField("Telefon", validators=[Optional()])
     password = PasswordField("Passwort", validators=[
-        InputRequired(message="Passwort erforderlich"), 
+        InputRequired(), 
         Length(min=8)
     ])
     password_confirm = PasswordField("Wiederholen", validators=[
-        InputRequired(message="Passwort bestätigen"), 
-        EqualTo("password", message="Passwörter stimmen nicht überein")
+        InputRequired(), 
+        EqualTo("password")
     ])
     submit = SubmitField("Registrieren")
