@@ -7,11 +7,10 @@ body {
 .hero {
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .hero-container {
-  padding: 5rem 5%;
   background-color: var(--color-background);
 }
 
@@ -32,7 +31,6 @@ body {
   margin-bottom: 2.5rem;
 }
 
-/* Buttons im Hero: Hauptfarbe + Akzent */
 .hero-btn-primary {
   background-color: var(--color-light_shade);
   color: var(--color-dark_shade);
@@ -57,13 +55,11 @@ body {
   color: var(--color-dark_shade);
 }
 
-/* Logo */
 .hero-logo {
   max-height: 450px;
   filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.4));
 }
 
-/* Auth-Seiten */
 .auth-page {
   color: var(--color-light_shade);
 }
