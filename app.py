@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 app.config.from_mapping(
     SECRET_KEY = 'secret_key_just_for_dev_environment',
-    BOOTSTRAP_BOOTSWATCH_THEME = 'pulse'
+    BOOTSTRAP_BOOTSWATCH_THEME = 'superhero'
 )
 
 from db import db, User, Category, Status, Job
@@ -54,6 +54,8 @@ def helfer_registrieren():
         if form.validate():
         # ToDo Register Logik
             return redirect(url_for('helfer'))
+        else: 
+            flash('Registrierung fehlgeschlagen', 'error')
     return render_template('helfer_registrieren.html', form = form)
 
 @app.route('/helfer/stellenangebot', methods=['GET', 'POST'])

@@ -1,21 +1,11 @@
 body {
-  background-color: var(--color-background);
   font-family: 'Palanquin', sans-serif;
-  color: var(--color-light_shade);
 }
 
 .hero {
   min-height: 100vh;
   display: flex;
   align-items: flex-start;
-}
-
-.hero-container {
-  background-color: var(--color-background);
-}
-
-.hero-text {
-  color: var(--color-light_shade);
 }
 
 .hero-text h1 {
@@ -26,59 +16,19 @@ body {
 
 .hero-text p {
   font-size: clamp(1.3rem, 2.2vw, 1.7rem);
-  color: var(--color-light_shade);
   opacity: 0.9;
   margin-bottom: 2.5rem;
 }
 
-.hero-btn-primary {
-  background-color: var(--color-light_shade);
-  color: var(--color-dark_shade);
-  border-color: var(--color-light_shade);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-}
-
-.hero-btn-primary:hover {
-  background-color: var(--color-accent2);
-  border-color: var(--color-accent2);
-  color: var(--color-light_shade);
-}
-
-.hero-btn-secondary {
-  border-width: 2px;
-  border-color: var(--color-light_shade);
-  color: var(--color-light_shade);
-}
-
-.hero-btn-secondary:hover {
-  background-color: var(--color-light_shade);
-  color: var(--color-dark_shade);
-}
-
 .hero-logo {
   max-height: 450px;
-  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.4));
   margin-top: 3rem;
 }
 
-.auth-page {
-  color: var(--color-light_shade);
-}
-
 .auth-page h2 {
-  color: var(--color-light_shade);
   font-weight: 600;
 }
 
 .auth-page label {
-  color: var(--color-light_shade);
   font-weight: 500;
-}
-
-.auth-page a {
-  color: var(--color-accent2);
-}
-
-.auth-page a:hover {
-  color: var(--color-light_shade);
 }
