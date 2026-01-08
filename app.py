@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_bootstrap import Bootstrap5
 from forms import LoginForm, RegisterForm
+from flask_login import LoginManager, login_required
 
 app = Flask(__name__)
 
@@ -12,6 +13,8 @@ app.config.from_mapping(
 from db import db, User, Category, Status, Job
 
 bootstrap = Bootstrap5(app) 
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -33,6 +36,7 @@ def index():
     return render_template('index.html')
 
 @app.route('/helfer/', methods=['GET', 'POST'])
+@login_required
 def helfer():
     if request.method == 'POST':
         return
@@ -61,22 +65,25 @@ def helfer_registrieren():
     return render_template('helfer_registrieren.html', form=form)
 
 @app.route('/helfer/stellenangebot', methods=['GET', 'POST'])
+@login_required
 def hlefer_stellenangebot():
     if request.method == 'POST':
         return
     return 'Helfer Stellenangebote suchen'
 
 @app.route('/helfer/profil', methods=['GET', 'POST'])
-def hlefer_profil():
+@login_required
+def helfer_profil():
     if request.method == 'POST':
         return
     return 'Helfer Profil'
 
 @app.route('/kunde/', methods=['GET', 'POST'])
+@login_required
 def kunde():
     if request.method == 'POST':
         return
-    return 'Kunde Startseite'
+    return render_template('kunde_startseite.html')
 
 @app.route('/kunde/anmelden', methods=['GET', 'POST'])
 def kunde_anmelden():
@@ -101,12 +108,14 @@ def kunde_registrieren():
     return render_template('kunde_registrieren.html', form=form)
 
 @app.route('/kunde/stellenangebot', methods=['GET', 'POST'])
+@login_required
 def kunde_stellenangebot():
     if request.method == 'POST':
         return
     return 'Kunde Stellenangebot aufgeben'
 
 @app.route('/kunde/profil', methods=['GET', 'POST'])
+@login_required
 def kunde_profil():
     if request.method == 'POST':
         return

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block TITLE %}Kunden Dashboard{% endblock %}
+{% block CONTENT %}
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h5><i class="bi bi-inbox"></i> Anfragen</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if jobs %}
+                            {% for job in jobs %}
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h6>{{ job.description }}</h6>
+                                    <p class="small text-muted">{{ job.date.strftime('%d.%m.%Y') }} • {{ job.hours }}h</p>
+                                    <span class="badge bg-warning">{{ job.kunde.statusName }}</span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="text-muted">Keine offenen Anfragen</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="card mt-3 shadow">
+                    <div class="card-body text-center">
+                        <a href="{{ url_for('kunde_stellenangebot') }}" 
+                        class="btn btn-success btn-lg w-100">
+                            <i class="bi bi-plus-circle"></i> Stellenangebot aufgeben
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card shadow">
+                    <div class="card-header bg-success text-white">
+                        <h6><i class="bi bi-clock"></i> Stundenkonten</h6>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted">Noch keine Stunden erfasst</p>
+                    </div>
+                </div>
+                
+                <div class="card mt-3 shadow">
+                    <div class="card-header bg-info text-white">
+                        <h6><i class="bi bi-check-circle"></i> Erledigt</h6>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted">0 abgeschlossene Jobs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
