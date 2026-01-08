@@ -3,15 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import orm
 from app import app
 
-@click.command("init-db")
-def init():
-    with app.app_context():
-        db.drop_all()
-        db.create_all()
-    click.echo("Database initialized (all tables recreated).")
-
-app.cli.add_command(init)
-
 def insert_sample():
 
     user1 = User(
@@ -50,7 +41,7 @@ def insert_sample():
 
     )
 
-    db.session.add_all([user1,user2,category1,category2,status1,status2,status3,job1])
+    db.session.add_all([user1,user2,category1,category2,category3,status1,status2,status3,job1])
     db.session.commit()
 
 @click.command("insert-sample")
@@ -113,15 +104,13 @@ class Job(db.Model):
     realHours = db.Column(db.Float, default=None)
     
     kunde = db.relationship(
-        "user",
+        "User",
         foreign_keys=[kundeId],
         back_populates="jobs_created"
     )
 
     helfer = db.relationship(
-        "user",
+        "User",
         foreign_keys=[helferId],
         back_populates="jobs_taken"
     )
-
-with app.app_context(): db.create_all()

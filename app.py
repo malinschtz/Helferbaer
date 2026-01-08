@@ -10,11 +10,15 @@ app.config.from_mapping(
     BOOTSTRAP_BOOTSWATCH_THEME = 'superhero'
 )
 
-from db import db, User, Category, Status, Job
+from db import db, User, Category, Status, Job, insert_sample
 
 bootstrap = Bootstrap5(app) 
+
 login_manager = LoginManager()
 login_manager.init_app(app)
+@login_manager.user_loader
+def load_user(user_id):
+    return db.session.get(User, int(user_id))
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -121,6 +125,10 @@ def kunde_profil():
         return
     return 'Kunde Profil'
 
+@app.route('/insert/sample')
+def run_insert_sample():
+    insert_sample()
+    return 'Database flushed and populated with some sample data.'
 
    
 
