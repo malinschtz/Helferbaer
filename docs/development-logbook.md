@@ -16,28 +16,11 @@ nav_order: 1
 {: toc }
 </details>
 
-## Sources:
 
-[Bsp.:
-Datum...
-Quelle, die genutzt wurde]
+## Table:
 
-## AI usage:
-
-[Bsp.:
-Datum...
-ChatGPT wurde genutzt bei ...]
-
-## Adaptation:
-
-[Bsp.:
-Datum...
-Damit wurde im Code ... angepasst ...]
-
-## Table: (andere Version, als Tabelle)
-
-| Datum    | Verwendungszweck | Quelle |
-| --- | ---  | --- |
-| 11.11.11 | .....| Kursmaterial |
-| 12.12.12 | .... | KI (ChatGPT) |
-| 25.25.25 | .... | Website Link |
+| Datum/Uhrzeit | Feature | Verwendungszweck | Quelle |
+| --- | ---  | --- | --- |
+| 11.11.11/11:11 | .....|....| Kursmaterial |
+| 12.12.12/11:11 | .... |....| KI (ChatGPT) |
+| 25.25.25/11:11 | .... |....| Website Link |
