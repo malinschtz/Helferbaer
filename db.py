@@ -3,54 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import orm
 from app import app
 
-def insert_sample():
-
-    user1 = User(
-            name="Müller",
-            firstName="Anna",
-            birthday="1961-01-01",
-            email="annamüller@gmail.de",
-            password="test",
-            role="kunde"
-        )
-    user2 = User(
-            name="Fillon",
-            firstName="Leonie",
-            birthday="2002-07-31",
-            email="leoniefillon@gmail.de",
-            password="test",
-            role="helfer"
-        )
-    
-    category1 = Category(catName="Haushaltsnahe Dienstleistung")
-    category2 = Category(catName="Begleitdienste")
-    category3 = Category(catName="Betreuung und Gesellschaft")
-
-    status1 = Status(statusName="offen")
-    status2 = Status(statusName="gebucht")
-    status3 = Status(statusName="erledigt")
-
-    job1 = Job(
-        kunde=user1,
-        helfer=user2,
-        description="Hilfe beim Staubsaugen und Boden wischen",
-        date="2026-01-08",
-        hours=2,
-        categroy=category2,
-        status=status2
-
-    )
-
-    db.session.add_all([user1,user2,category1,category2,category3,status1,status2,status3,job1])
-    db.session.commit()
-
-@click.command("insert-sample")
-def insert_sample_command():
-    insert_sample()
-    click.echo("Sample data inserted.")
-
-app.cli.add_command(insert_sample_command)
-
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///helferbaer.sqlite' 
 
 db = SQLAlchemy()
@@ -66,18 +18,6 @@ class User(db.Model):
     password = db.Column(db.String, nullable=False)
     phone = db.Column(db.String)
     role = db.Column(db.String, nullable=False)
-
-    jobs_created = db.relationship(
-        "Job",
-        foreign_keys="Job.kundeId",
-        back_populates="kunde"
-    )
-
-    jobs_taken = db.relationship(
-        "Job",
-        foreign_keys="Job.helferId",
-        back_populates="helfer"
-    )
 
 class Category(db.Model):
     __tablename__ = "category"
@@ -113,4 +53,16 @@ class Job(db.Model):
         "User",
         foreign_keys=[helferId],
         back_populates="jobs_taken"
+    )
+
+User.jobs_created = db.relationship(
+        "Job",
+        foreign_keys=[Job.kundeId],
+        back_populates="kunde"
+    )
+
+User.jobs_taken = db.relationship(
+        "Job",
+        foreign_keys=[Job.helferId],
+        back_populates="helfer"
     )
