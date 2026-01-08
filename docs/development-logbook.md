@@ -19,7 +19,7 @@ nav_order: 4
 | Datum/Uhrzeit | Feature | Beschreibung | Quelle |
 | --- | ---  | --- | --- |
 | --- | ---  | --- | --- |
-| --- | ---  | --- | --- |
+| 08.01.26/11:10 | Datenbank | Samples eingepflegt | Kursmaterial |
 | 07.01.26/12:20 | UI Screens | WTForms in html eingearbeitet, eigenes color.css gelöscht --> Bootswatch 'superhero' | Kursmaterial + https://www.youtube.com/watch?v=GbJPqu0ff9A&t=96s + PerplexityAI |
 | 06.01.26/17:30 | UI Screens | Layout der Anmelde- und Registrierseiten | Bootstrap + PerplexityAI |
 | 04.01.26/10:00 | UI Screens | Layout index.html, dafür auch base.html angepasst | Bootstrap + PerplexityAI |
