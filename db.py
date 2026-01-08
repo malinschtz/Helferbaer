@@ -50,7 +50,7 @@ def insert_sample():
 
     )
 
-    db.session.add_all([user1,user2,category1,category2,category3,status1,status2,status3,job1])
+    db.session.add_all([user1,user2,category1,category2,status1,status2,status3,job1])
     db.session.commit()
 
 @click.command("insert-sample")
@@ -77,14 +77,14 @@ class User(db.Model):
     role = db.Column(db.String, nullable=False)
 
     jobs_created = db.relationship(
-        "job",
-        foreign_keys="job.kundeId",
+        "Job",
+        foreign_keys="Job.kundeId",
         back_populates="kunde"
     )
 
     jobs_taken = db.relationship(
-        "job",
-        foreign_keys="job.helferId",
+        "Job",
+        foreign_keys="Job.helferId",
         back_populates="helfer"
     )
 
