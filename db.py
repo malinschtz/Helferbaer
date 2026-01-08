@@ -50,7 +50,7 @@ def insert_sample():
 
     )
 
-    db.session.add_all([user1,user2,category1,category2,status1,status2,status3,job1])
+    db.session.add_all([user1,user2,category1,category2,category3,status1,status2,status3,job1])
     db.session.commit()
 
 @click.command("insert-sample")
