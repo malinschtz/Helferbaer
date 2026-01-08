@@ -3,9 +3,6 @@ title: Development Logbook
 nav_order: 4
 ---
 
-{: .label }
-[Jane Dane]
-
 {: .no_toc }
 # Development Logbook
 
@@ -19,8 +16,11 @@ nav_order: 4
 
 ## Table:
 
-| Datum/Uhrzeit | Feature | Verwendungszweck | Quelle |
+| Datum/Uhrzeit | Feature | Beschreibung | Quelle |
 | --- | ---  | --- | --- |
-| 11.11.11/11:11 | .....|....| Kursmaterial |
-| 12.12.12/11:11 | .... |....| KI (ChatGPT) |
-| 25.25.25/11:11 | .... |....| Website Link |
+| --- | ---  | --- | --- |
+| --- | ---  | --- | --- |
+| 07.01.26/12:20 | UI Screens | WTForms in html eingearbeitet, eigenes color.css gelöscht --> Bootswatch 'superhero' | Kursmaterial + https://www.youtube.com/watch?v=GbJPqu0ff9A&t=96s + PerplexityAI |
+| 06.01.26/17:30 | UI Screens | Layout der Anmelde- und Registrierseiten | Bootstrap + PerplexityAI |
+| 04.01.26/10:00 | UI Screens | Layout index.html, dafür auch base.html angepasst | Bootstrap + PerplexityAI |
+| 29.12.25/17:40 | Datenbank | Datenbank mit SQLAlchemy aufgebaut | Kursmaterial + https://www.youtube.com/watch?v=529LYDgRTgQ |
