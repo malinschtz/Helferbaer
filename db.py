@@ -1,6 +1,7 @@
 import click
 from flask_sqlalchemy import SQLAlchemy 
 from sqlalchemy import orm
+from flask_login import UserMixin
 from app import app
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///helferbaer.sqlite' 
@@ -8,7 +9,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///helferbaer.sqlite'
 db = SQLAlchemy()
 db.init_app(app)
  
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = "user"
     userId = db.Column(db.Integer, primary_key=True, index=True)
     name = db.Column(db.String, nullable=False)
@@ -30,6 +31,9 @@ class User(db.Model):
         foreign_keys='Job.helferId',
         back_populates="helfer"
     )
+
+    def get_id(self):
+        return str(self.userId)
 
 class Category(db.Model):
     __tablename__ = "category"

@@ -117,6 +117,7 @@ def helfer_registrieren():
 
         db.session.add(user)
         db.session.commit()
+        login_user(user)
         flash('Registrierung erfolgreich!', 'success')
         return redirect(url_for('helfer'))
     return render_template('helfer_registrieren.html', form=form)
@@ -174,6 +175,7 @@ def kunde_registrieren():
 
         db.session.add(user)
         db.session.commit()
+        login_user(user)
         flash('Registrierung erfolgreich!', 'success')
         return redirect(url_for('kunde'))
     return render_template('kunde_registrieren.html', form=form)
