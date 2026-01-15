@@ -37,6 +37,9 @@
           <div class='col-md-6 mb-3'>
             {{ form.password_confirm.label(class='form-label') }}
             {{ form.password_confirm(class='form-control') }}
+            {% if form.password_confirm.errors %}
+              <div class="text-danger">{{ form.password_confirm.errors[0] }}</div>
+            {% endif %}
           </div>
         </div>
 

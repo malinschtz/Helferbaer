@@ -19,6 +19,18 @@ class User(db.Model):
     phone = db.Column(db.String)
     role = db.Column(db.String, nullable=False)
 
+    jobs_created = db.relationship(
+        "Job",
+    foreign_keys='Job.kundeId',
+        back_populates="kunde"
+    )
+
+    jobs_taken = db.relationship(
+        "Job",
+        foreign_keys='Job.helferId',
+        back_populates="helfer"
+    )
+
 class Category(db.Model):
     __tablename__ = "category"
     catId = db.Column(db.Integer, primary_key=True, index=True)
@@ -35,6 +47,8 @@ class Job(db.Model):
     kundeId = db.Column(db.Integer, db.ForeignKey("user.userId"), nullable=False)
     description = db.Column(db.String, nullable=False)
     date = db.Column(db.Date, nullable=False)
+    street = db.Column(db.String, nullable=False)
+    plz = db.Column(db.Integer, nullable=False)
     uploaded = db.Column(db.DateTime, nullable=False, default=db.func.now())
     catId = db.Column(db.Integer, db.ForeignKey("category.catId"))
     statusId = db.Column(db.Integer, db.ForeignKey("status.statusId"))
@@ -55,14 +69,22 @@ class Job(db.Model):
         back_populates="jobs_taken"
     )
 
-User.jobs_created = db.relationship(
-        "Job",
-        foreign_keys=[Job.kundeId],
-        back_populates="kunde"
-    )
 
-User.jobs_taken = db.relationship(
-        "Job",
-        foreign_keys=[Job.helferId],
-        back_populates="helfer"
-    )
+@click.command("init-db")
+def init_db():
+    with app.app_context():
+        db.drop_all()
+        db.create_all()
+    click.echo("DB initialisiert (Tabellen erstellt)")
+
+@click.command("insert-sample")
+def insert_sample():
+    with app.app_context():
+        # Sample-Daten 
+        db.session.add_all(['sample'])
+        db.session.commit()
+    click.echo("Sample-Daten eingefügt")
+
+app.cli.add_command(init_db)
+app.cli.add_command(insert_sample)
+
