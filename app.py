@@ -57,25 +57,7 @@ def delete(user_id):
         return 'User gelöscht'
     else:
         return 'user nicht gefunden'
-
-@app.route('/insert/', methods=['GET', 'POST'])
-def inser():
-    user = User(
-        firstName = 'Leonie',
-        name = 'Fillon',
-        birthday = date.fromisoformat('2002-08-31'),
-        email = 'leoniefillon@gmail.com',
-        phone = None,
-        password = bcrypt.generate_password_hash('12345678').decode('utf-8'),
-        role = 'helfer'
-    )
-
-    db.session.add(user)
-    db.session.commit()
-    return f'User "{user.firstName} {user.name}" hinzugefügt (ID: {user.userId})'
-
-    
-    
+        
 
 @app.route('/helfer/', methods=['GET', 'POST'])
 @login_required
@@ -88,12 +70,17 @@ def helfer():
 def helfer_anmelden():
     form = LoginForm()
     if form.validate_on_submit(): # Kombiniert if request.method == 'POST': & if form.validate():
-        # ToDo Login Logik
-        if True:
-            login_user()
-            return redirect(url_for('helfer'))
+        user = User.query.filter_by(email=form.email.data).first()
+        if not user:
+            flash('Email nicht gefunden. Bitte erst registrieren!', 'error')
+        elif not bcrypt.check_password_hash(user.password, form.password.data):
+            flash('Passwort ungültig!', 'error')
+        elif user.role != 'helfer':
+            flash('Nur Alltagshelfer können sich hier anmelden.', 'error')
         else: 
-            flash('Anmeldung fehlgeschlagen', 'error')
+            login_user(user)
+            flash('Willkommen zurück!', 'success')
+            return redirect(url_for('helfer'))
     return render_template('helfer_anmelden.html', form=form)
 
 @app.route('/helfer/registrieren', methods=['GET', 'POST'])
@@ -124,7 +111,7 @@ def helfer_registrieren():
 
 @app.route('/helfer/stellenangebot', methods=['GET', 'POST'])
 @login_required
-def hlefer_stellenangebot():
+def helfer_stellenangebot():
     if request.method == 'POST':
         return
     return 'Helfer Stellenangebote suchen'
@@ -141,17 +128,25 @@ def helfer_profil():
 def kunde():
     if request.method == 'POST':
         return
-    return render_template('kunde_startseite.html')
+    else:
+        hours = current_user.current_month_hours
+        return render_template('kunde_startseite.html', hours=hours)
 
 @app.route('/kunde/anmelden', methods=['GET', 'POST'])
 def kunde_anmelden():
     form = LoginForm()
-    if request.method == 'POST':
-        if form.validate():
-        # ToDo Login Logik
-            return redirect(url_for('kunde'))
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if not user:
+            flash('Email nicht gefunden. Bitte erst registrieren!', 'error')
+        elif not bcrypt.check_password_hash(user.password, form.password.data):
+            flash('Passwort ungültig!', 'error')
+        elif user.role != 'kunde':
+            flash('Nur AKunden können sich hier anmelden.', 'error')
         else: 
-            flash('Anmeldung fehlgeschlagen', 'error')
+            login_user(user)
+            flash('Willkommen zurück!', 'success')
+            return redirect(url_for('kunde'))
     return render_template('kunde_anmelden.html', form=form)
 
 @app.route('/kunde/registrieren', methods=['GET', 'POST'])

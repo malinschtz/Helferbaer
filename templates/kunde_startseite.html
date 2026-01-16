@@ -24,33 +24,46 @@
                         {% endif %}
                     </div>
                 </div>
-                
-                <div class="card mt-3 shadow">
-                    <div class="card-body text-center">
-                        <a href="{{ url_for('kunde_stellenangebot') }}" 
-                        class="btn btn-success btn-lg w-100">
-                            <i class="bi bi-plus-circle"></i> Stellenangebot aufgeben
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-4">
-                <div class="card shadow">
-                    <div class="card-header bg-success text-white">
-                        <h6><i class="bi bi-clock"></i> Stundenkonten</h6>
-                    </div>
-                    <div class="card-body">
-                        <p class="text-muted">Noch keine Stunden erfasst</p>
-                    </div>
-                </div>
-                
+
                 <div class="card mt-3 shadow">
                     <div class="card-header bg-info text-white">
                         <h6><i class="bi bi-check-circle"></i> Erledigt</h6>
                     </div>
                     <div class="card-body">
                         <p class="text-muted">0 abgeschlossene Jobs</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card shadow">
+                    <div class="card-header bg-success text-white">
+                        <h6><i class="bi bi-clock"></i> Stundenkonten</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <h2 class="text-success fw-bold">{{ "%.1f"|format(hours.gesamt) }} h</h2>
+                            <span class="badge bg-success">Gesamter Monat</span>
+                        </div>
+                        <div class="row text-center">
+                            <div class="col-6">
+                                <h3 class="text-primary fw-bold">{{ "%.1f"|format(hours.gebuchte+hours.offene)}} h</h3>
+                                <span class="badge bg-primary">Angefragt</span>
+                            </div>
+                            <div class="col-6">
+                                <h3 class="text-info fw-bold">{{ "%.1f"|format(hours.erledigte) }} h</h3>
+                                <span class="badge bg-info">Erledigt</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-3 shadow">
+                    <div class="card-body text-center">
+                        <a href="{{ url_for('kunde_stellenangebot') }}" 
+                        class="btn btn-success btn-lg w-100">
+                            <i class="bi bi-plus-circle"></i> Stellenangebot aufgeben
+                        </a>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import click
 from flask_sqlalchemy import SQLAlchemy 
-from sqlalchemy import orm
 from flask_login import UserMixin
+from datetime import date, timedelta
 from app import app
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///helferbaer.sqlite' 
@@ -34,6 +34,24 @@ class User(db.Model, UserMixin):
 
     def get_id(self):
         return str(self.userId)
+    
+    @property
+    def current_month_hours(self):
+        #lädt Stunden des aktuellen Monats für Stundenkonto
+        current_month = date.today().replace(day=1)
+        next_month = (current_month + timedelta(days=32)).replace(day=1)        
+        jobs = [job for job in self.jobs_created if current_month <= job.date < next_month]
+        
+        offene = sum(job.hours for job in jobs if job.statusId == 1)
+        gebuchte = sum(job.hours for job in jobs if job.statusId == 2)
+        erledigte = sum(job.realHours or job.hours for job in jobs if job.statusId == 3)
+        
+        return {
+        'offene': offene,
+        'gebuchte': gebuchte, 
+        'erledigte': erledigte,
+        'gesamt': offene + gebuchte + erledigte
+    }
 
 class Category(db.Model):
     __tablename__ = "category"
@@ -74,6 +92,7 @@ class Job(db.Model):
     )
 
 
+
 @click.command("init-db")
 def init_db():
     with app.app_context():
@@ -85,7 +104,30 @@ def init_db():
 def insert_sample():
     with app.app_context():
         # Sample-Daten 
-        db.session.add_all(['sample'])
+        job1 = Job(
+            kundeId = 2,
+            description = 'Autofahrt + Begleitung zum Artzttermin',
+            date = date.fromisoformat('2026-01-20'),
+            street = 'Sundgauer Straße',
+            plz = 14169,
+            catId = 2,
+            statusId = 1,
+            hours = 1.5
+        )
+
+        job2 = Job(
+            kundeId = 2,
+            description = 'Wäsche waschen und aufhängen + Einkaufen',
+            date = date.fromisoformat('2026-01-14'),
+            street = 'Sundgauer Straße',
+            plz = 14169,
+            catId = 1,
+            statusId = 3,
+            hours = 2,
+            helferId = 1,
+            realHours = 2.5
+        )
+        db.session.add_all([job1, job2,])
         db.session.commit()
     click.echo("Sample-Daten eingefügt")
 
