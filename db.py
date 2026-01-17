@@ -35,9 +35,9 @@ class User(db.Model, UserMixin):
     def get_id(self):
         return str(self.userId)
     
+    #lädt Stunden des aktuellen Monats für Stundenkonto
     @property
     def current_month_hours(self):
-        #lädt Stunden des aktuellen Monats für Stundenkonto
         current_month = date.today().replace(day=1)
         next_month = (current_month + timedelta(days=32)).replace(day=1)        
         jobs = [job for job in self.jobs_created if current_month <= job.date < next_month]
@@ -52,6 +52,21 @@ class User(db.Model, UserMixin):
         'erledigte': erledigte,
         'gesamt': offene + gebuchte + erledigte
     }
+
+    #angefragte und erledeigte Jobs für Kunden Dashboard
+    def get_jobs_by_status(self):
+        jobs = Job.query.filter(
+            Job.kundeId == self.userId
+        ).order_by(Job.date.desc()).all()
+        
+        # Trennung: angefragt (offen/gebucht) vs erledigt
+        angefragte_jobs = [j for j in jobs if j.statusId in [1,2]] #offen/gebucht
+        erledigte_jobs = [j for j in jobs if j.statusId == 3] #erledigt
+        
+        return {
+            'angefragte_jobs': angefragte_jobs,
+            'erledigte_jobs': erledigte_jobs
+        }
 
 class Category(db.Model):
     __tablename__ = "category"
@@ -91,7 +106,7 @@ class Job(db.Model):
         back_populates="jobs_taken"
     )
 
-
+    status = db.relationship('Status', backref='jobs')
 
 @click.command("init-db")
 def init_db():
@@ -100,8 +115,37 @@ def init_db():
         db.create_all()
     click.echo("DB initialisiert (Tabellen erstellt)")
 
-@click.command("insert-sample")
-def insert_sample():
+@click.command("insert-first")
+def insert_sample1():
+    with app.app_context():
+        # Sample-Daten 
+        cat1 = Category(
+            catName = 'Haushaltsnahe Dienstleistungen'
+        )
+        cat2 = Category(
+            catName = 'Begleitdienste'
+        )
+        cat3 = Category(
+            catName = 'Betreuung und Gesellschaft'
+        )
+        
+        stat1 = Status(
+            statusName = 'offen'
+        )
+        stat2 = Status(
+            statusName = 'gebucht'
+        )
+        stat3 = Status(
+            statusName = 'erledigt'
+        )
+
+        
+        db.session.add_all([cat1, cat2, cat3, stat1, stat2, stat3])
+        db.session.commit()
+    click.echo("Sample-Daten eingefügt")
+
+@click.command("insert-second")
+def insert_sample2():
     with app.app_context():
         # Sample-Daten 
         job1 = Job(
@@ -127,10 +171,25 @@ def insert_sample():
             helferId = 1,
             realHours = 2.5
         )
-        db.session.add_all([job1, job2,])
+
+        job3 = Job(
+            kundeId = 2,
+            description = 'Gartenarbeiten',
+            date = date.fromisoformat('2026-01-20'),
+            street = 'Sundgauer Straße',
+            plz = 14169,
+            catId = 1,
+            statusId = 2,
+            hours = 2,
+            helferId = 1,
+            realHours = None
+        )
+        db.session.add_all([job1, job2, job3])
         db.session.commit()
     click.echo("Sample-Daten eingefügt")
 
 app.cli.add_command(init_db)
-app.cli.add_command(insert_sample)
+app.cli.add_command(insert_sample1)
+app.cli.add_command(insert_sample2)
+
 

@@ -129,8 +129,14 @@ def kunde():
     if request.method == 'POST':
         return
     else:
+        #Stundenkonto
         hours = current_user.current_month_hours
-        return render_template('kunde_startseite.html', hours=hours)
+        DE_MONTHS = {1: 'Januar', 2: 'Februar', 3: 'März', 4: 'April',5: 'Mai', 6: 'Juni', 7: 'Juli', 8: 'August',9: 'September', 10: 'Oktober', 11: 'November', 12: 'Dezember'}
+        monat_name = f"{DE_MONTHS[date.today().month]} {date.today().year}"
+
+        #Anfragen und Erledigte Jobs
+        jobs_data = current_user.get_jobs_by_status()
+        return render_template('kunde_startseite.html', hours=hours, monat_name=monat_name, **jobs_data)
 
 @app.route('/kunde/anmelden', methods=['GET', 'POST'])
 def kunde_anmelden():
@@ -188,6 +194,13 @@ def kunde_profil():
     if request.method == 'POST':
         return
     return 'Kunde Profil'
+
+@app.route('/kunde/helfer_anzeigen', methods=['GET', 'POST'])
+@login_required
+def kunde_helfer_anzeigen():
+    if request.method == 'POST':
+        return
+    return render_template('kunde_helfer_anzeigen.html')
 
 
    
