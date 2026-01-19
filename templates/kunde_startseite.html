@@ -23,7 +23,7 @@
                                         </div>
 
                                         {% if job.statusId == 2 %}
-                                        <form method="POST" action="" class="d-inline">
+                                        <form method="POST" action="{{ url_for('kunde_mark_as_done', job_id=job.jobId)}}" class="d-inline">
                                             <button type="submit" class="btn btn-primary" onclick="return confirm('Als erledigt markieren?')">
                                                 erledigt
                                                 </button>

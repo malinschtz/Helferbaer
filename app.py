@@ -128,6 +128,7 @@ def helfer_profil():
 def kunde():
     if request.method == 'POST':
         return
+
     else:
         #Stundenkonto
         hours = current_user.current_month_hours
@@ -201,6 +202,15 @@ def kunde_helfer_anzeigen():
     if request.method == 'POST':
         return
     return render_template('kunde_helfer_anzeigen.html')
+
+@app.route('/kunde/job/<int:job_id>/done', methods=['POST'])
+@login_required
+def kunde_mark_as_done(job_id):
+    job = Job.query.get_or_404(job_id)
+    job.statusId = 3
+    db.session.commit()
+    flash('Job als erledigt markiert!', 'success')
+    return redirect(url_for('kunde'))
 
 
    

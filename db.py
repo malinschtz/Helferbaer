@@ -147,7 +147,7 @@ def insert_sample1():
 @click.command("insert-second")
 def insert_sample2():
     with app.app_context():
-        # Sample-Daten 
+        #Sample-Daten 
         job1 = Job(
             kundeId = 2,
             description = 'Autofahrt + Begleitung zum Artzttermin',
@@ -184,12 +184,21 @@ def insert_sample2():
             helferId = 1,
             realHours = None
         )
-        db.session.add_all([job1, job2, job3])
+        db.session.add_all([job3])
         db.session.commit()
     click.echo("Sample-Daten eingefügt")
+
+@click.command("delete-job")
+def delete():
+    with app.app_context():
+        job = Job.query.get(3)
+        db.session.delete(job)
+        db.session.commit()
+    click.echo("Daten gelöscht")
 
 app.cli.add_command(init_db)
 app.cli.add_command(insert_sample1)
 app.cli.add_command(insert_sample2)
+app.cli.add_command(delete)
 
 
