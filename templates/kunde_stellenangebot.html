@@ -1,6 +1,68 @@
 {% extends 'base.html' %}
 {% block TITLE %}Helferbär | Stellenangebot aufgeben{% endblock %}
 {% block CONTENT %}
+<div class="container-fluid mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-xl-6">
+      <div class="card shadow-lg border-0">
+        <div class="card-header bg-success text-white text-center">
+          <h4><i class="bi bi-plus-circle"></i> Neues Stellenangebot</h4>
+          <p class="mb-0 opacity-75">Helferbär findet passende Helfer!</p>
+        </div>
+        <div class="card-body p-5">
+          <form method="POST" action="{{ url_for('kunde_stellenangebot') }}">
+            {{ form.hidden_tag() }}
+            
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                {{ form.date.label(class="form-label fw-semibold") }}
+                {{ form.date(class="form-control form-control-lg", placeholder="TT.MM.JJJJ") }}   
+              </div>
+              <div class="col-md-6 mb-4">
+                {{ form.hours.label(class="form-label fw-semibold") }}
+                {{ form.hours(class="form-control form-control-lg", placeholder="2.5") }}
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              {{ form.category.label(class="form-label fw-semibold") }}
+              {{ form.category(class="form-select form-select-lg") }}
+            </div>
+            
+            <div class="mb-4">
+              {{ form.street.label(class="form-label fw-semibold") }}
+              {{ form.street(class="form-control form-control-lg", placeholder="Musterstr. 123") }}
+            </div>
 
+            <div class="mb-4">
+              {{ form.plz.label(class="form-label fw-semibold") }}
+              {{ form.plz(class="form-control form-control-lg", placeholder="12345") }}
+            </div>
+            
+            <div class="mb-5">
+              {{ form.description.label(class="form-label fw-semibold") }}
+              {{ form.description(class="form-control form-control-lg", rows=4, placeholder="z.B. Einkauf bei Rewe, schwere Taschen tragen...") }}
+              <div class="form-text">Mind. 10 Zeichen</div>
+            </div>
+
+            <div class="mb-4">
+                <div class="form-check form-switch">
+                    {{ form.is_template(class="form-check-input", id="isTemplateSwitch") }}
+                    {{ form.is_template.label(class="form-check-label fw-semibold", for="isTemplateSwitch") }}
+                </div>
+            </div>
+            
+            <div class="d-grid gap-2">
+                {{ form.submit(class="btn btn-success btn-lg btn-block") }}
+                <a href="{{ url_for('kunde') }}" class="btn btn-outline">
+                    <i class="bi bi-arrow-left"></i> Zurück zum Dashboard
+                </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

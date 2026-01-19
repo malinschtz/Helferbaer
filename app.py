@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_bootstrap import Bootstrap5
-from forms import LoginForm, RegisterForm
+from forms import LoginForm, RegisterForm, StellenangebotForm
 from sqlalchemy import select
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
 from flask_bcrypt import Bcrypt
@@ -185,9 +185,31 @@ def kunde_registrieren():
 @app.route('/kunde/stellenangebot', methods=['GET', 'POST'])
 @login_required
 def kunde_stellenangebot():
-    if request.method == 'POST':
-        return
-    return render_template('kunde_stellenangebot.html')
+    form = StellenangebotForm()
+    print(f"Request method: {request.method}")
+    print(f"Form valid: {form.validate_on_submit()}")
+    print(f"Form errors: {form.errors}")
+    print(f"Description data: {form.description.data}")
+    if form.validate_on_submit():
+        job = Job(
+            kundeId = current_user.userId,
+            description = form.description.data,
+            date = form.date.data,
+            street = form.street.data,
+            plz = form.plz.data,
+            catId = form.category.data,
+            statusId = 1,
+            hours = form.hours.data,
+            isTemplate = form.is_template.data,
+        )
+        db.session.add(job)
+        db.session.commit()
+        if form.is_template.data:
+            flash('Vorlage gespeichert! Wird in "Meine Vorlagen" angezeigt.', 'info')
+        flash('Stellenangebot aufgegeben! Helfer werden benachrichtigt.')
+        return redirect(url_for('kunde'))
+    
+    return render_template('kunde_stellenangebot.html', form=form)
 
 @app.route('/kunde/profil', methods=['GET', 'POST'])
 @login_required

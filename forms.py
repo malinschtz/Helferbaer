@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, DateField, SubmitField, SelectField
-from wtforms.validators import InputRequired, Email, EqualTo, Length, Optional
-
+from wtforms import StringField, PasswordField, DateField, SubmitField, SelectField, FloatField, BooleanField
+from wtforms.validators import InputRequired, Email, EqualTo, Length, Optional, NumberRange, Regexp
+    
 class LoginForm(FlaskForm):
     email = StringField("E-Mail", validators=[
         InputRequired(),
@@ -35,3 +35,13 @@ class RegisterForm(FlaskForm):
         EqualTo("password")
     ])
     submit = SubmitField("Registrieren")
+
+class StellenangebotForm(FlaskForm):
+    description = StringField('Beschreibung', validators=[InputRequired(), Length(min=10, max=500)])
+    date = DateField('Datum', format='%Y-%m-%d' , validators=[InputRequired()])
+    street = StringField('Straße & Hausnummer', validators=[InputRequired()])
+    plz = StringField('PLZ', validators=[InputRequired(), Regexp(r'^\d+$', message='Nur Zahlen erlaubt')])
+    category = SelectField('Kategorie', choices=[(1, 'Haushaltsnahe Dienstleistungen'), (2, 'Begleitdienste'), (3, 'Betreuung und Gesellschaft')])
+    is_template = BooleanField('Als Vorlage speichern?', description='Speichere diese Stellenangebot als Vorlage um es später wieder zu benutzen')
+    hours = FloatField('Erwartete Stunden', validators=[InputRequired(), NumberRange(min=0.5, max=10)])
+    submit = SubmitField('Stellenangebot aufgeben')

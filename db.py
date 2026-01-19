@@ -191,7 +191,7 @@ def insert_sample2():
 @click.command("delete-job")
 def delete():
     with app.app_context():
-        job = Job.query.get(3)
+        job = Job.query.get(7)
         db.session.delete(job)
         db.session.commit()
     click.echo("Daten gelöscht")
