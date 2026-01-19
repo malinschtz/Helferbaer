@@ -186,7 +186,7 @@ def kunde_registrieren():
 def kunde_stellenangebot():
     if request.method == 'POST':
         return
-    return 'Kunde Stellenangebot aufgeben'
+    return render_template('kunde_stellenangebot.html')
 
 @app.route('/kunde/profil', methods=['GET', 'POST'])
 @login_required
