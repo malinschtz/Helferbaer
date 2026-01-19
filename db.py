@@ -68,6 +68,19 @@ class User(db.Model, UserMixin):
             'angefragte_jobs': angefragte_jobs,
             'erledigte_jobs': erledigte_jobs
         }
+    
+    #Stundenkonto für Helfer Dashboard
+    @property
+    def gesamtArbeitsStunden(self):
+        if self.role != 'helfer':
+            return 0
+
+        return sum(
+            job.realHours or 0
+            for job in self.jobs
+            if job.statusId == 3  
+        )
+
 
 class Category(db.Model):
     __tablename__ = "category"

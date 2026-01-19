@@ -12,6 +12,10 @@
                     <h6>Mein Profil</h6>
                 </div>
                 <div class="card-body">
+
+                    <h2>Willkommen {{ current_user.firstName }}</h2>
+                    <p>Rolle: {{ current_user.role }}</p>
+
                     <p><strong>Name:</strong> {{ current_user.firstName }} {{ current_user.name }}</p>
                     <p><strong>E-Mail:</strong> {{ current_user.email }}</p>
                     <p><strong>Telefon:</strong> {{ current_user.phone or '–' }}</p>
@@ -26,7 +30,7 @@
                     <h6>Stundenkonto</h6>
                 </div>
                 <div class="card-body text-center">
-                    <h2 class="fw-bold">12.5 h</h2>
+                    <h2 class="fw-bold">{{total_hours}}</h2>
                     <span class="badge bg-success">Diesen Monat</span>
                 </div>
             </div>
@@ -39,16 +43,20 @@
                     <h6>Anstehende Jobs</h6>
                 </div>
                 <div class="card-body">
+                    <h3>Meine Jobs</h3>
+                    {% for job in jobs %}
+                        <div class="card mb-2">
+                            <div class="card-body py-2">
+                                {{ job.description }} am {{ job.date }}
+                            </div>
+                        </div>
+                    {% else %}
                     <div class="card mb-2">
                         <div class="card-body py-2">
-                            Einkaufshilfe am 22.01.2026
+                            Keine Jobs vorhanden
                         </div>
                     </div>
-                    <div class="card mb-2">
-                        <div class="card-body py-2">
-                            Begleitdienst am 25.01.2026
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

@@ -62,7 +62,13 @@ def delete(user_id):
 @app.route('/helfer/', methods=['GET'])
 @login_required
 def helfer():
-    return render_template('helfer_dashboard.html')
+    if  current_user.role != 'helfer':
+        return redirect(url_for('index'))
+    
+    jobs = current_user.jobs
+    total_hours = current_user.gesamtArbeitsStunden
+    
+    return render_template('helfer_dashboard.html', helfer=current_user, jobs=jobs, total_hours=total_hours)
 @app.route('/helfer/anmelden', methods=['GET', 'POST'])
 def helfer_anmelden():
     form = LoginForm()
