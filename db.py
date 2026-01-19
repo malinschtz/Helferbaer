@@ -1,5 +1,5 @@
 import click
-from flask_sqlalchemy import SQLAlchemy 
+from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from datetime import date, timedelta
 from app import app
@@ -19,6 +19,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String, nullable=False)
     phone = db.Column(db.String)
     role = db.Column(db.String, nullable=False)
+    registered_date = db.Column(db.Date, default=date.today())
 
     jobs_created = db.relationship(
         "Job",
@@ -184,7 +185,7 @@ def insert_sample2():
             helferId = 1,
             realHours = None
         )
-        db.session.add_all([job3])
+        db.session.add_all([job1, job2, job3])
         db.session.commit()
     click.echo("Sample-Daten eingefügt")
 

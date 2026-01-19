@@ -218,12 +218,27 @@ def kunde_profil():
         return
     return 'Kunde Profil'
 
-@app.route('/kunde/helfer_anzeigen', methods=['GET', 'POST'])
+@app.route('/kunde/helfer_profil/<int:helfer_id>', methods=['GET'])
 @login_required
-def kunde_helfer_anzeigen():
+def kunde_helfer_profil(helfer_id):
     if request.method == 'POST':
         return
-    return render_template('kunde_helfer_anzeigen.html')
+    
+    helfer = db.session.get(User, helfer_id)
+    # Alle gemeinsamen Jobs
+    helfer_jobs = Job.query.filter(
+        Job.kundeId == current_user.userId,
+        Job.helferId == helfer.userId,
+        Job.statusId == 3
+    ).order_by(Job.date.desc()).all()
+
+    # Alle Jobs des Helfers 
+    total_jobs = Job.query.filter(
+        Job.helferId == helfer.userId,
+        Job.statusId == 3  # Erledigt
+    ).count()
+    
+    return render_template('kunde_helfer_profil.html', helfer=helfer, helfer_jobs=helfer_jobs, total_jobs=total_jobs)
 
 @app.route('/kunde/job/<int:job_id>/done', methods=['POST'])
 @login_required

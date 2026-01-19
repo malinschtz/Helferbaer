@@ -13,12 +13,13 @@
                             {% for job in angefragte_jobs %}
                             <div class="card mb-3 shadow-sm border-start border-primary border-3">
                                 <div class="card-body py-3 px-3">
-                                    <div class="d-flex jusity-content-between align-items-center gap-3">
+                                    <div class="d-flex justify-content-between align-items-center gap-3">
                                         <div class="flex-grow-1">
                                             <span class="badge bg-primary fs-6">{{ 'Offen' if job.statusId==1 else 'Gebucht' }}</span>
+                                            <span class="badge bg-primary fs-6">{{ job.hours }} h </span>
                                             <h6 class="mb-1 fw-bold py-2">{{ job.description}} am {{ job.date.strftime('%d.%m.%Y') }}</h6>
                                             {% if job.statusId == 2 %}
-                                            <p><a class="text-white text-decoration-none fw-semibold" href="{{ url_for('kunde_helfer_anzeigen') }}">Helfer: {{ job.helfer.firstName }} {{ job.helfer.name }}</a></p>
+                                            <p><a class="text-white text-decoration-none fw-semibold" href="{{ url_for('kunde_helfer_profil', helfer_id=job.helfer.userId) }}">Helfer: {{ job.helfer.firstName }} {{ job.helfer.name }}</a></p>
                                             {% endif %}
                                         </div>
 
@@ -48,10 +49,11 @@
                             {% for job in erledigte_jobs %}
                             <div class="card mb-3 shadow-sm border-start border-info border-3">
                                 <div class="card-body py-3 px-3">
-                                    <div class="d-flex jusity-content-between align-items-center gap-3">
+                                    <div class="d-flex justify-content-between align-items-center gap-3">
                                         <div class="flex-grow-1">
+                                            <span class="badge bg-info fs-6">{{ job.hours }} h </span>
                                             <h6 class="mb-1 fw-bold py-2">{{ job.description}} am {{ job.date.strftime('%d.%m.%Y') }}</h6>
-                                            <p><a class="text-white text-decoration-none fw-semibold" href="{{ url_for('kunde_helfer_anzeigen') }}">Helfer: {{ job.helfer.firstName }} {{ job.helfer.name }}</a></p>
+                                            <p><a class="text-white text-decoration-none fw-semibold" href="{{ url_for('kunde_helfer_profil', helfer_id=job.helfer.userId) }}">Helfer: {{ job.helfer.firstName }} {{ job.helfer.name }}</a></p>
                                         </div>
                                     </div>
                                 </div>
