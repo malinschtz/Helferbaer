@@ -59,13 +59,10 @@ def delete(user_id):
         return 'user nicht gefunden'
         
 
-@app.route('/helfer/', methods=['GET', 'POST'])
+@app.route('/helfer/', methods=['GET'])
 @login_required
 def helfer():
-    if request.method == 'POST':
-        return
-    return 'Helfer Startseite'
-
+    return render_template('helfer_dashboard.html')
 @app.route('/helfer/anmelden', methods=['GET', 'POST'])
 def helfer_anmelden():
     form = LoginForm()
