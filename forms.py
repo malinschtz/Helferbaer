@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, DateField, SubmitField, SelectField, FloatField, BooleanField
 from wtforms.validators import InputRequired, Email, EqualTo, Length, Optional, NumberRange, Regexp
-    
+ 
 class LoginForm(FlaskForm):
     email = StringField("E-Mail", validators=[
         InputRequired(),
@@ -45,3 +45,10 @@ class StellenangebotForm(FlaskForm):
     is_template = BooleanField('Als Vorlage speichern?', description='Speichere diese Stellenangebot als Vorlage um es später wieder zu benutzen')
     hours = FloatField('Erwartete Stunden', validators=[InputRequired(), NumberRange(min=0.5, max=10)])
     submit = SubmitField('Stellenangebot aufgeben')
+
+class JobFilterForm(FlaskForm):
+    search = StringField('Suche (Beschreibung)', validators=[Optional()])
+    category = SelectField('Kategorie', choices=[(1, 'Haushaltsnahe Dienstleistungen'), (2, 'Begleitdienste'), (3, 'Betreuung und Gesellschaft')], default=0, validators=[Optional()])
+    plz = StringField('PLZ filtern', validators=[Optional(), Regexp(r'^\d{5}$', message='PLZ: 5 Ziffern')])
+    min_hours = FloatField('Min. Stunden', validators=[Optional(), NumberRange(min=0.5)])
+    submit = SubmitField('Suchen')

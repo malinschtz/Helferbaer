@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block TITLE %}Kunde {{ kunde.firstName }} {{ kunde.name }}{% endblock %}
+{% block TITLE %}Helferbär | Kunde {{ kunde.firstName }} {{ kunde.name }}{% endblock %}
 {% block CONTENT %}
 <div class="container mt-4">
   <div class="row justify-content-center">
@@ -34,8 +34,8 @@
           {% endif %}
           
           <div class="mt-4 text-center">
-            <a href="{{ url_for('helfer') }}" class="btn btn-outline">
-              <i class="bi bi-arrow-left"></i> Zurück zum Dashboard
+            <a href="{{ request.referrer }}" class="btn btn-outline">
+              <i class="bi bi-arrow-left"></i> Zurück 
             </a>
           </div>
         </div>

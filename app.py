@@ -1,13 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_bootstrap import Bootstrap5
-from forms import LoginForm, RegisterForm, StellenangebotForm
+from forms import LoginForm, RegisterForm, StellenangebotForm, JobFilterForm
 from sqlalchemy import select
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
 from flask_bcrypt import Bcrypt
 from datetime import date
 
 app = Flask(__name__)
-bcrypt = Bcrypt(app) #für Password Hashing
+bcrypt = Bcrypt(app) 
 
 app.config.from_mapping(
     SECRET_KEY = 'secret_key_just_for_dev_environment',
@@ -43,21 +43,7 @@ def index():
             elif action == 'register':
                 return redirect(url_for('kunde_registrieren'))
     
-    return render_template('index.html')
-
-@app.route('/delete/<int:user_id>', methods=['GET', 'POST'])  # Sicherer mit ID!
-def delete(user_id):
-    user = db.session.execute(
-        select(User).filter_by(userId=user_id)  # Primärschlüssel!
-    ).scalar_one_or_none()
-    
-    if user:
-        db.session.delete(user)
-        db.session.commit()
-        return 'User gelöscht'
-    else:
-        return 'user nicht gefunden'
-        
+    return render_template('index.html')        
 
 @app.route('/helfer/', methods=['GET', 'POST'])
 @login_required
@@ -120,9 +106,30 @@ def helfer_registrieren():
 @app.route('/helfer/stellenangebot', methods=['GET', 'POST'])
 @login_required
 def helfer_stellenangebot():
-    if request.method == 'POST':
-        return
-    return 'Helfer Stellenangebote suchen'
+    form = JobFilterForm()
+    
+    # Dynamische Kategorien laden
+    categories = Category.query.all()
+    form.category.choices = [(0, 'Alle')] + [(c.catId, c.catName) for c in categories]
+    
+    jobs = Job.query.filter(
+        Job.statusId == 1,
+        Job.helferId.is_(None) 
+    ).order_by(Job.date.asc())
+    
+    if form.validate_on_submit():
+        if form.search.data:
+            jobs = jobs.filter(Job.description.ilike(f'%{form.search.data}%'))
+        if form.category.data != '0':
+            jobs = jobs.filter(Job.catId == form.category.data)
+        if form.plz.data:
+            jobs = jobs.filter(Job.plz == int(form.plz.data))
+        if form.min_hours.data:
+            jobs = jobs.filter(Job.hours >= form.min_hours.data)
+    
+    jobs = jobs.paginate(page=request.args.get('page', 1, type=int), per_page=10)
+    
+    return render_template('helfer_stellenangebot.html', form=form, jobs=jobs)
 
 @app.route('/helfer/profil', methods=['GET', 'POST'])
 @login_required
@@ -148,9 +155,17 @@ def helfer_kunde_profil(kunde_id):
         Job.kundeId == kunde.userId,
         Job.statusId == 3 
     ).count()
-    
     return render_template('helfer_kunde_profil.html', kunde=kunde, kunde_jobs=kunde_jobs, total_jobs=total_jobs)
 
+@app.route('/helfer/job_buchen/<int:job_id>', methods=['POST'])
+@login_required
+def helfer_job_buchen(job_id):
+    job = Job.query.get_or_404(job_id)
+    job.helferId = current_user.userId
+    job.statusId = 2 
+    db.session.commit()
+    flash(f'"{job.description[:30]}..." gebucht! Details im Dashboard.', 'success')
+    return redirect(url_for('helfer_stellenangebot'))
 
 @app.route('/kunde/', methods=['GET', 'POST'])
 @login_required
@@ -271,8 +286,11 @@ def kunde_helfer_profil(helfer_id):
 
 @app.route('/kunde/job/<int:job_id>/done', methods=['POST'])
 @login_required
-def kunde_mark_as_done(job_id):
+def kunde_job_erledigt(job_id):
     job = Job.query.get_or_404(job_id)
+    real_hours = request.form.get('real_hours')
+    if real_hours:
+        job.realHours = float(real_hours)
     job.statusId = 3
     db.session.commit()
     flash('Job als erledigt markiert!', 'success')

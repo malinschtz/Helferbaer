@@ -24,11 +24,45 @@
                                         </div>
 
                                         {% if job.statusId == 2 %}
-                                        <form method="POST" action="{{ url_for('kunde_mark_as_done', job_id=job.jobId)}}" class="d-inline">
-                                            <button type="submit" class="btn btn-primary" onclick="return confirm('Als erledigt markieren?')">
-                                                erledigt
-                                                </button>
-                                        </form>
+                                        <div class="d-flex justify-content-end">
+                                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#doneModal{{ job.jobId }}">
+                                                <i class="bi bi-check-circle"></i> Als erledigt markieren
+                                            </button>
+                                        </div>
+
+                                        <div class="modal fade" id="doneModal{{ job.jobId }}" tabindex="-1">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Job erledigt: {{ job.description[:50] }}</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                    </div>
+                                                    <form method="POST" action="{{ url_for('kunde_job_erledigt', job_id=job.jobId) }}">
+                                                    <div class="modal-body">
+                                                        <div class="mb-3">
+                                                            <label class="form-label fw-bold">Wie viele Stunden hat der Job tatsächlich gedauert?</label>
+                                                            <div class="input-group">
+                                                                <input type="number" step="0.5" min="0.5" max="24" 
+                                                                    name="real_hours" value="{{ job.hours }}" 
+                                                                    class="form-control form-control-lg" required 
+                                                                    placeholder="z.B. 2.5">
+                                                                <span class="input-group-text">h</span>
+                                                            </div>
+                                                            <div class="form-text">
+                                                                Geplant waren {{ job.hours }}h. Du kannst das korrigieren.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                                                        <button type="submit" class="btn btn-primary" onclick="return confirm('Stunden speichern & als erledigt markieren?')">
+                                                            <i class="bi bi-check-lg"></i> Erledigt speichern
+                                                        </button>
+                                                    </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                         {% endif %}
                                     </div>
                                 </div>

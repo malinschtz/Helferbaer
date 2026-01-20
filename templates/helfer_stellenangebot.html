@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block TITLE %}Helferbär | Stellenangebot suchen{% endblock %}
+{% block CONTENT %}
+<div class="container mt-4">
+    <div class="card shadow border-0 mb-4">
+        <div class="card-header bg-primary text-white py-3">
+            <h5 class="mb-0"><i class="bi bi-funnel-fill"></i> Filter & Suche</h5>
+        </div>
+        <div class="card-body">
+            <form method="POST" class="row g-3 align-items-end">
+                {{ form.hidden_tag() }}
+                <div class="col-lg-3 col-md-6">
+                    <label class="form-label fw-semibold">{{ form.search.label }}</label>
+                    {{ form.search(class="form-control", placeholder="Einkaufen, Arzt...") }}
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <label class="form-label fw-semibold">{{ form.category.label }}</label>
+                    {{ form.category(class="form-select") }}
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <label class="form-label fw-semibold">{{ form.plz.label }}</label>
+                    {{ form.plz(class="form-control", placeholder="14169") }}
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <label class="form-label fw-semibold">{{ form.min_hours.label }}</label>
+                    {{ form.min_hours(class="form-control", placeholder="2.0") }}
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    {{ form.submit(class="btn btn-primary btn-lg w-100", **{'data-bs-toggle':'tooltip', 'title':'Suchen & Filtern'}) }}
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+        <div>
+            <h3 class="mb-1">{{ jobs.total }} offene Jobs gefunden</h3>
+        </div>
+        <div class="btn-group" role="group">
+            {% if jobs.has_prev %}
+            <a href="{{ url_for('helfer_stellenangebot', page=jobs.prev_num) }}" class="btn btn-outline-primary">
+                <i class="bi bi-chevron-left"></i> Vorherige
+            </a>
+            {% endif %}
+            {% if jobs.has_next %}
+            <a href="{{ url_for('helfer_stellenangebot', page=jobs.next_num) }}" class="btn btn-outline-primary">
+                Nächste <i class="bi bi-chevron-right"></i>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if jobs.items %}
+    <div class="row g-4">
+        {% for job in jobs.items %}
+        <div class="col-lg-6 col-xl-4">
+            <div class="card h-100 shadow-lg border-0">
+                <div class="card-header text-white p-4 border-0">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <h4 class="mb-0 fw-bold flex-grow-1 me-3">{{ job.description }}</h4>
+                        <div class="text-end ms-2">
+                            <span class="badge bg-primary text-white fs-5 px-3 py-2">{{ job.hours }} h</span>
+                        </div>
+                    </div>
+                    <p class="mb-0 mt-2 opacity-75">{{ job.date.strftime('%d.%m.%Y') }} • {{ job.street }}, {{ job.plz }}</p>
+                </div>
+                {% if job.kunde %}
+                <div class="d-flex align-items-center p-3 rounded-3">
+                    <div class="flex-shrink-0">
+                        <i class="bi bi-person-circle fs-3"></i>
+                    </div>
+                    <div class="ms-3">
+                        <a href="{{ url_for('helfer_kunde_profil', kunde_id=job.kunde.userId) }}" 
+                            class="text-white text-decoration-none fw-bold h5 mb-1 d-block">
+                            {{ job.kunde.firstName }} {{ job.kunde.name }}
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="card-footer bg-transparent border-top p-4">
+                    <form method="POST" action="{{ url_for('helfer_job_buchen', job_id=job.jobId) }}" onclick="return confirm('Job buchen? Du kannst ihn später im Dashboard sehen.')">
+                        <button type="submit" class="btn btn-primary btn-lg w-100 shadow">
+                            <i class="bi bi-calendar2-check me-2"></i>
+                            <strong>Jetzt buchen</strong>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <div class="display-4 mb-4 text-muted">
+            <i class="bi bi-inbox"></i>
+        </div>
+        <h3 class="text-muted mb-4">Keine Jobs gefunden</h3>
+        <p class="lead text-muted mb-4">Deine Filter sind zu spezifisch oder es gibt aktuell keine passenden Angebote.</p>
+        <a href="{{ url_for('helfer_stellenangebot') }}" class="btn btn-outline-primary btn-lg px-4">
+            <i class="bi bi-arrow-clockwise"></i> Filter zurücksetzen
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
