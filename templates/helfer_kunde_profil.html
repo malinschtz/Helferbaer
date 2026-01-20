@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block TITLE %}Kunde {{ kunde.firstName }} {{ kunde.name }}{% endblock %}
+{% block CONTENT %}
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-lg">
+        <div class="card-header bg-info text-white text-center">
+          <h4><i class="bi bi-person"></i> {{ kunde.firstName }} {{ kunde.name }}</h4>
+        </div>
+        <div class="card-body">
+          <div class="row text-center mb-6">
+            <div class="col-md-6">
+              <h5 class="text-primary">{{ kunde.phone or 'Keine Telefonnummer angegeben' }}</h5>
+              <small class="text-muted">Telefon</small>
+            </div>
+            <div class="col-md-6">
+              <h5 class="text-primary">{{ kunde.registered_date.strftime('%d.%m.%Y') if kunde.registered_date else 'Unbekannt' }}</h6>
+              <small class="text-muted">Bei Helferbär seit</small>
+            </div>
+          </div>
+          
+          {% if kunde_jobs %}
+            <h6>Ihre gemeinsamen Jobs:</h6>
+            {% for job in kunde_jobs %}
+              <div class="card mb-2">
+                <div class="card-body py-2">
+                  {{ job.description }} am {{ job.date.strftime('%d.%m.%Y') }}
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="text-muted">Keine gemeinsamen Jobs</p>
+          {% endif %}
+          
+          <div class="mt-4 text-center">
+            <a href="{{ url_for('helfer') }}" class="btn btn-outline">
+              <i class="bi bi-arrow-left"></i> Zurück zum Dashboard
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

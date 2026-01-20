@@ -59,16 +59,21 @@ def delete(user_id):
         return 'user nicht gefunden'
         
 
-@app.route('/helfer/', methods=['GET'])
+@app.route('/helfer/', methods=['GET', 'POST'])
 @login_required
 def helfer():
-    if  current_user.role != 'helfer':
-        return redirect(url_for('index'))
+    if request.method == 'POST':
+        return 
+    # Stundenkonto
+    hours = current_user.current_month_hours_helfer
+    DE_MONTHS = {1: 'Januar', 2: 'Februar', 3: 'März', 4: 'April',5: 'Mai', 6: 'Juni', 7: 'Juli', 8: 'August',9: 'September', 10: 'Oktober', 11: 'November', 12: 'Dezember'}
+    monat_name = f"{DE_MONTHS[date.today().month]} {date.today().year}"
+
+    # Gebuchte und erledigte Jobs
+    jobs_data = current_user.get_jobs_by_status_helfer()
     
-    jobs = current_user.jobs_taken
-    total_hours = current_user.gesamtArbeitsStunden
-    
-    return render_template('helfer_dashboard.html', helfer=current_user, jobs=jobs, total_hours=total_hours)
+    return render_template('helfer_startseite.html', hours=hours, monat_name=monat_name, **jobs_data)
+
 @app.route('/helfer/anmelden', methods=['GET', 'POST'])
 def helfer_anmelden():
     form = LoginForm()
@@ -126,6 +131,27 @@ def helfer_profil():
         return
     return 'Helfer Profil'
 
+@app.route('/helfer/kunde_profil/<int:kunde_id>', methods=['GET'])
+@login_required
+def helfer_kunde_profil(kunde_id):
+    
+    kunde = db.session.get(User, kunde_id)
+    # Alle gemeinsamen Jobs
+    kunde_jobs = Job.query.filter(
+        Job.helferId == current_user.userId,
+        Job.kundeId == kunde.userId,
+        Job.statusId == 3
+    ).order_by(Job.date.desc()).all()
+
+    # Alle Jobs des Kunden
+    total_jobs = Job.query.filter(
+        Job.kundeId == kunde.userId,
+        Job.statusId == 3 
+    ).count()
+    
+    return render_template('helfer_kunde_profil.html', kunde=kunde, kunde_jobs=kunde_jobs, total_jobs=total_jobs)
+
+
 @app.route('/kunde/', methods=['GET', 'POST'])
 @login_required
 def kunde():
@@ -134,12 +160,12 @@ def kunde():
 
     else:
         #Stundenkonto
-        hours = current_user.current_month_hours
+        hours = current_user.current_month_hours_kunde
         DE_MONTHS = {1: 'Januar', 2: 'Februar', 3: 'März', 4: 'April',5: 'Mai', 6: 'Juni', 7: 'Juli', 8: 'August',9: 'September', 10: 'Oktober', 11: 'November', 12: 'Dezember'}
         monat_name = f"{DE_MONTHS[date.today().month]} {date.today().year}"
 
         #Anfragen und Erledigte Jobs
-        jobs_data = current_user.get_jobs_by_status()
+        jobs_data = current_user.get_jobs_by_status_kunde()
         return render_template('kunde_startseite.html', hours=hours, monat_name=monat_name, **jobs_data)
 
 @app.route('/kunde/anmelden', methods=['GET', 'POST'])

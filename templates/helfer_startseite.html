@@ -1,4 +1,92 @@
 {% extends 'base.html' %}
 {% block TITLE %}Helferbär | Helfer Dashboard{% endblock %}
 {% block CONTENT %}
+     <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h5><i class="bi bi-inbox"></i> Anstehende Jobs </h5>
+                    </div>
+                    <div class="card-body p-3">
+                        {% if gebuchte_jobs %}
+                            {% for job in gebuchte_jobs %}
+                            <div class="card mb-3 shadow-sm border-start border-primary border-3">
+                                <div class="card-body py-3 px-3">
+                                    <div class="d-flex justify-content-between align-items-center gap-3">
+                                        <div class="flex-grow-1">
+                                            <span class="badge bg-primary fs-6">{{ job.hours }} h </span>
+                                            <h6 class="mb-1 fw-bold py-2">{{ job.description}} am {{ job.date.strftime('%d.%m.%Y') }}</h6>
+                                            <p><a class="text-white text-decoration-none fw-semibold" href="{{ url_for('helfer_kunde_profil', kunde_id=job.kunde.userId) }}">Kunde: {{ job.kunde.firstName }} {{ job.kunde.name }}</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="text-muted">Keine Anfragen</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="card mt-3 shadow">
+                    <div class="card-header bg-info text-white">
+                        <h6><i class="bi bi-check-circle"></i> Erledigt</h6>
+                    </div>
+                    <div class="card-body p-3">
+                        {% if erledigte_jobs %}
+                            {% for job in erledigte_jobs %}
+                            <div class="card mb-3 shadow-sm border-start border-info border-3">
+                                <div class="card-body py-3 px-3">
+                                    <div class="d-flex justify-content-between align-items-center gap-3">
+                                        <div class="flex-grow-1">
+                                            <span class="badge bg-info fs-6">{{ job.realHours }} h </span>
+                                            <h6 class="mb-1 fw-bold py-2">{{ job.description}} am {{ job.date.strftime('%d.%m.%Y') }}</h6>
+                                            <p><a class="text-white text-decoration-none fw-semibold" href="{{ url_for('helfer_kunde_profil', kunde_id=job.kunde.userId) }}">Kunde: {{ job.kunde.firstName }} {{ job.kunde.name }}</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="text-muted">0 erledigte Jobs</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card shadow">
+                    <div class="card-header bg-success text-white">
+                        <h6><i class="bi bi-clock"></i> Stundenkonten - {{ monat_name }}</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <h2 class="text-success fw-bold">{{ "%.1f"|format(hours.gesamt) }} h</h2>
+                            <span class="badge bg-success">Gesamter Monat</span>
+                        </div>
+                        <div class="row text-center">
+                            <div class="col-6 border-end">
+                                <h3 class="text-primary fw-bold">{{ "%.1f"|format(hours.gebuchte)}} h</h3>
+                                <span class="badge bg-primary">Gebucht</span>
+                            </div>
+                            <div class="col-6">
+                                <h3 class="text-info fw-bold">{{ "%.1f"|format(hours.erledigte) }} h</h3>
+                                <span class="badge bg-info">Erledigt</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-3 shadow">
+                    <div class="card-body text-center">
+                        <a href="{{ url_for('helfer_stellenangebot') }}" 
+                        class="btn btn-success btn-lg w-100">
+                            <i class="bi bi-plus-circle"></i> Stellenangebot suchen
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

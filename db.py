@@ -36,9 +36,9 @@ class User(db.Model, UserMixin):
     def get_id(self):
         return str(self.userId)
     
-    #lädt Stunden des aktuellen Monats für Stundenkonto
+    #lädt Stunden des aktuellen Monats für Stundenkonto Kunde
     @property
-    def current_month_hours(self):
+    def current_month_hours_kunde(self):
         current_month = date.today().replace(day=1)
         next_month = (current_month + timedelta(days=32)).replace(day=1)        
         jobs = [job for job in self.jobs_created if current_month <= job.date < next_month]
@@ -54,18 +54,49 @@ class User(db.Model, UserMixin):
         'gesamt': offene + gebuchte + erledigte
     }
 
+    #lädt Stunden des aktuellen Monats für Stundenkonto Helfer
+    @property
+    def current_month_hours_helfer(self):
+        current_month = date.today().replace(day=1)
+        next_month = (current_month + timedelta(days=32)).replace(day=1)        
+        jobs = [job for job in self.jobs_taken if current_month <= job.date < next_month]
+        
+        gebuchte = sum(job.hours for job in jobs if job.statusId == 2)
+        erledigte = sum(job.realHours or job.hours for job in jobs if job.statusId == 3)
+        
+        return {
+        'gebuchte': gebuchte, 
+        'erledigte': erledigte,
+        'gesamt': gebuchte + erledigte
+    }
+
     #angefragte und erledeigte Jobs für Kunden Dashboard
-    def get_jobs_by_status(self):
+    def get_jobs_by_status_kunde(self):
         jobs = Job.query.filter(
             Job.kundeId == self.userId
         ).order_by(Job.date.desc()).all()
         
         # Trennung: angefragt (offen/gebucht) vs erledigt
-        angefragte_jobs = [j for j in jobs if j.statusId in [1,2]] #offen/gebucht
-        erledigte_jobs = [j for j in jobs if j.statusId == 3] #erledigt
+        angefragte_jobs = [j for j in jobs if j.statusId in [1,2]] 
+        erledigte_jobs = [j for j in jobs if j.statusId == 3] 
         
         return {
             'angefragte_jobs': angefragte_jobs,
+            'erledigte_jobs': erledigte_jobs
+        }
+    
+    #angefragte und erledeigte Jobs für Helfer Dashboard
+    def get_jobs_by_status_helfer(self):
+        jobs = Job.query.filter(
+            Job.helferId == self.userId
+        ).order_by(Job.date.desc()).all()
+        
+        # Trennung: gebuchte vs erledigt
+        gebuchte_jobs = [j for j in jobs if j.statusId == 2]
+        erledigte_jobs = [j for j in jobs if j.statusId == 3] 
+        
+        return {
+            'gebuchte_jobs': gebuchte_jobs,
             'erledigte_jobs': erledigte_jobs
         }
     
