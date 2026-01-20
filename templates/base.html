@@ -29,7 +29,25 @@
 
                 <div class="collapse navbar-collapse" id="navbarMain">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        {{ render_nav_item('index', 'Home') }}
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            {% if current_user.is_authenticated %}
+
+                                {% if current_user.role == 'kunde' %}
+                                    {{ render_nav_item('kunde', 'Home') }}
+                                    {{ render_nav_item('kunde_stellenangebot', 'Stellenangebote') }}
+                                {% elif current_user.role == 'helfer' %}
+                                    {{ render_nav_item('helfer', 'Home') }}
+                                    {{ render_nav_item('helfer_stellenangebot', 'Stellenangebote') }}
+                                {% endif %}
+
+                                {{ render_nav_item('logout', 'Logout') }}
+
+                            {% else %}
+                                {{ render_nav_item('index', 'Home') }}
+                                
+                            {% endif %}
+                        </ul>
+
                     </ul>
                 </div>
             </div>
