@@ -16,8 +16,6 @@ nav_order: 3
 {: toc }
 </details>
 
-## 01: [Title]
-
 ### Meta
 
 Status
