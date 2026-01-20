@@ -65,7 +65,7 @@ def helfer():
     if  current_user.role != 'helfer':
         return redirect(url_for('index'))
     
-    jobs = current_user.jobs
+    jobs = current_user.jobs_taken
     total_hours = current_user.gesamtArbeitsStunden
     
     return render_template('helfer_dashboard.html', helfer=current_user, jobs=jobs, total_hours=total_hours)

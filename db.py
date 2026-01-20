@@ -77,7 +77,7 @@ class User(db.Model, UserMixin):
 
         return sum(
             job.realHours or 0
-            for job in self.jobs
+            for job in self.jobs_taken
             if job.statusId == 3  
         )
 
