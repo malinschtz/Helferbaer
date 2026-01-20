@@ -24,3 +24,4 @@ nav_order: 4
 | 06.01.26/17:30 | UI Screens | Layout der Anmelde- und Registrierseiten | Bootstrap + PerplexityAI |
 | 04.01.26/10:00 | UI Screens | Layout index.html, dafür auch base.html angepasst | Bootstrap + PerplexityAI |
 | 29.12.25/17:40 | Datenbank | Datenbank mit SQLAlchemy aufgebaut | Kursmaterial + https://www.youtube.com/watch?v=529LYDgRTgQ |
+| 20.01.25/17:55 | Design Decision | auf Docs Design Decision begründet | Kursmaterial + https://plainenglish.io/blog/sqlalchemy-vs-raw-sql-queries-in-python-a-comparative-example (Python Code Nemesis, 2013 |)
