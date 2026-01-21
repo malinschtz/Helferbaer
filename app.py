@@ -71,7 +71,7 @@ def helfer_anmelden():
         elif not bcrypt.check_password_hash(user.password, form.password.data):
             flash('Passwort ungültig!', 'error')
         elif user.role != 'helfer':
-            flash('Nur Alltagshelfer können sich hier anmelden.', 'error')
+            flash('Nur Alltagshelfer können sich hier anmelden. Bitte melden Sie sich als Kunde an', 'error')
         else: 
             login_user(user)
             flash('Willkommen zurück!', 'success')
@@ -194,7 +194,7 @@ def kunde_anmelden():
         elif not bcrypt.check_password_hash(user.password, form.password.data):
             flash('Passwort ungültig!', 'error')
         elif user.role != 'kunde':
-            flash('Nur AKunden können sich hier anmelden.', 'error')
+            flash('Nur Kunden können sich hier anmelden. Bitte melden Sie sich als Helfer an.', 'error')
         else: 
             login_user(user)
             flash('Willkommen zurück!', 'success')

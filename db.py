@@ -2,12 +2,15 @@ import click
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from datetime import date, timedelta
+from flask_bcrypt import Bcrypt
 from app import app
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///helferbaer.sqlite' 
 
+bcrypt = Bcrypt(app)
 db = SQLAlchemy()
 db.init_app(app)
+
  
 class User(db.Model, UserMixin):
     __tablename__ = "user"
@@ -160,10 +163,9 @@ def init_db():
         db.create_all()
     click.echo("DB initialisiert (Tabellen erstellt)")
 
-@click.command("insert-first")
-def insert_sample1():
+@click.command("insert-sample")
+def insert_sample():
     with app.app_context():
-        # Sample-Daten 
         cat1 = Category(
             catName = 'Haushaltsnahe Dienstleistungen'
         )
@@ -184,52 +186,119 @@ def insert_sample1():
             statusName = 'erledigt'
         )
 
-        
-        db.session.add_all([cat1, cat2, cat3, stat1, stat2, stat3])
-        db.session.commit()
-    click.echo("Sample-Daten eingefügt")
+        helfer1 = User(
+            name = 'Fillon',
+            firstName = 'Leonie',
+            birthday = date.fromisoformat('2002-08-31'),
+            email = 'leoniefillon@gmail.com',
+            password = bcrypt.generate_password_hash('12345678').decode('utf-8'),
+            phone = '0179 456 762 37',
+            role = 'helfer'
+        )
 
-@click.command("insert-second")
-def insert_sample2():
-    with app.app_context():
-        #Sample-Daten 
+        helfer2 = User(
+            name = 'Schröder',
+            firstName = 'Dennis',
+            birthday = date.fromisoformat('2003-09-15'),
+            email = 'dennisschröder@gmail.com',
+            password = bcrypt.generate_password_hash('12345678').decode('utf-8'),
+            phone = '0177 123 456 78',
+            role = 'helfer'
+        )
+
+        kunde1 = User(
+            name = 'Steini',
+            firstName = 'Silvia',
+            birthday = date.fromisoformat('1948-12-12'),
+            email = 'silviasteini@gmail.com',
+            password = bcrypt.generate_password_hash('12345678').decode('utf-8'),
+            phone = '0177 987 654 32',
+            role = 'kunde'
+        )
+
+        kunde2 = User(
+            name = 'Henne',
+            firstName = 'Hilda',
+            birthday = date.fromisoformat('1946-06-01'),
+            email = 'hildahenne@gmail.com',
+            password = bcrypt.generate_password_hash('12345678').decode('utf-8'),
+            phone = '0152 456 321 87',
+            role = 'kunde'
+        ) 
+
         job1 = Job(
-            kundeId = 2,
-            description = 'Autofahrt + Begleitung zum Artzttermin',
-            date = date.fromisoformat('2026-01-20'),
-            street = 'Sundgauer Straße',
-            plz = 14169,
+            kundeId = 3,
+            description = 'Autofahrt/Begleitung zum Arzttermin um 14 Uhr',
+            date = date.fromisoformat('2026-01-29'),
+            street = 'Musterstr. 123',
+            plz = 14195,
             catId = 2,
             statusId = 1,
-            hours = 1.5
+            hours = 2
         )
 
         job2 = Job(
-            kundeId = 2,
+            kundeId = 3,
             description = 'Wäsche waschen und aufhängen + Einkaufen',
             date = date.fromisoformat('2026-01-14'),
-            street = 'Sundgauer Straße',
-            plz = 14169,
+            street = 'Musterstr. 123',
+            plz = 14195,
             catId = 1,
             statusId = 3,
-            hours = 2,
+            hours = 2.5,
             helferId = 1,
             realHours = 2.5
         )
 
         job3 = Job(
-            kundeId = 2,
+            kundeId = 3,
             description = 'Gartenarbeiten',
-            date = date.fromisoformat('2026-01-20'),
-            street = 'Sundgauer Straße',
-            plz = 14169,
+            date = date.fromisoformat('2026-01-23'),
+            street = 'Musterstr. 123',
+            plz = 14195,
             catId = 1,
             statusId = 2,
             hours = 2,
-            helferId = 1,
-            realHours = None
+            helferId = 2
         )
-        db.session.add_all([job1, job2, job3])
+
+        job4 = Job(
+            kundeId = 4,
+            description = 'Kochen helfen + gemeinsam Abendessen',
+            date = date.fromisoformat('2026-01-23'),
+            street = 'Beispielstr. 321',
+            plz = 14195,
+            catId = 3,
+            statusId = 2,
+            hours = 2,
+            helferId = 1
+        )
+
+        job5 = Job(
+            kundeId = 4,
+            description = 'Neuen Schrank aufbauen',
+            date = date.fromisoformat('2026-01-24'),
+            street = 'Beispielstr. 321',
+            plz = 14195,
+            catId = 1,
+            statusId = 1,
+            hours = 2
+        )       
+
+        job6 = Job(
+            kundeId = 3,
+            description = 'Keller entrümpeln',
+            date = date.fromisoformat('2026-01-25'),
+            street = 'Musterstr. 123',
+            plz = 14195,
+            catId = 1,
+            statusId = 2,
+            hours = 2,
+            helferId = 2
+        )
+
+        
+        db.session.add_all([cat1, cat2, cat3, stat1, stat2, stat3, helfer1, helfer2, kunde1, kunde2, job1, job2, job3, job4, job5, job6])
         db.session.commit()
     click.echo("Sample-Daten eingefügt")
 
@@ -242,8 +311,7 @@ def delete():
     click.echo("Daten gelöscht")
 
 app.cli.add_command(init_db)
-app.cli.add_command(insert_sample1)
-app.cli.add_command(insert_sample2)
+app.cli.add_command(insert_sample)
 app.cli.add_command(delete)
 
 
