@@ -7,26 +7,26 @@ from flask_bcrypt import Bcrypt
 from datetime import date
 
 app = Flask(__name__)
-bcrypt = Bcrypt(app) 
+bcrypt = Bcrypt(app)    #Quelle: Flask-Bcrypt, Abschnitt "Usage"
 
-app.config.from_mapping(
-    SECRET_KEY = 'secret_key_just_for_dev_environment',
+app.config.from_mapping(                                    
+    SECRET_KEY = 'secret_key_just_for_dev_environment',     
     BOOTSTRAP_BOOTSWATCH_THEME = 'superhero'
 )
 
-from db import db, User, Category, Status, Job
+from db import db, User, Category, Job
 
 bootstrap = Bootstrap5(app) 
 
-login_manager = LoginManager()
+login_manager = LoginManager()      #Quelle: Flask-Login, Abschnitt "Configuring your Application"
 login_manager.init_app(app)
 
-@login_manager.user_loader
+@login_manager.user_loader      #Quelle: Flask-Login, Abschnitt "How it Works"
 def load_user(userId):
-    return db.session.get(User, userId)
+    return db.session.get(User, userId)     #Quelle: SQLAlchemy Session Basics, Abschnitt "Get by Primary Key"
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])    #Quelle: Kursmaterial Basic routing
 def index():
     if request.method == 'POST':
         if 'helfer' in request.form:
@@ -50,15 +50,16 @@ def index():
 def helfer():
     if request.method == 'POST':
         return 
+    
     # Stundenkonto
     hours = current_user.current_month_hours_helfer
     DE_MONTHS = {1: 'Januar', 2: 'Februar', 3: 'März', 4: 'April',5: 'Mai', 6: 'Juni', 7: 'Juli', 8: 'August',9: 'September', 10: 'Oktober', 11: 'November', 12: 'Dezember'}
-    monat_name = f"{DE_MONTHS[date.today().month]} {date.today().year}"
+    monat_name = f"{DE_MONTHS[date.today().month]} {date.today().year}"     #Quelle: Python datetime today
 
     # Gebuchte und erledigte Jobs
     jobs_data = current_user.get_jobs_by_status_helfer()
     
-    return render_template('helfer_startseite.html', hours=hours, monat_name=monat_name, **jobs_data)
+    return render_template('helfer_startseite.html', hours=hours, monat_name=monat_name, **jobs_data)   #Quelle: Python Unpacking Operators
 
 @app.route('/helfer/anmelden', methods=['GET', 'POST'])
 def helfer_anmelden():
