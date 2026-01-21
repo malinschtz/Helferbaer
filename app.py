@@ -28,7 +28,7 @@ def load_user(userId):
 
 @app.route('/', methods=['GET', 'POST'])    #Quelle: Kursmaterial Flask routing und requests, Abschnitt "5"
 def index():
-    if request.method == 'POST':
+    if request.method == 'POST': #prüft, ob auf button geklickt wurde
         if 'helfer' in request.form:        #Quelle: Kursmaterial Flask routing und requests, Abschnit "6"
             action = request.form['helfer']
             if action == 'login':
@@ -66,7 +66,7 @@ def helfer_anmelden():
     form = LoginForm()      #Quelle: Kursmaterial User Interfaces, Abschnitt "2"
     if form.validate_on_submit(): # Kombiniert if request.method == 'POST' & if form.validate() Quelle: Flask-WTF, Abschnitt "Validating Forms"
         user = db.session.execute(      #Quelle: Kursmaterial SQLAlchemy, Abschnitt "7"
-            select(User).filter_by(email=form.email.data)
+            select(User).filter_by(email=form.email.data) #Benutzer suchen nach E-Mail
             ).scalar_one_or_none()      
         if not user:
             flash('Email nicht gefunden. Bitte erst registrieren!', 'error')
@@ -130,7 +130,7 @@ def helfer_stellenangebot():
         if form.min_hours.data:
             stmt = stmt.where(Job.hours >= form.min_hours.data)
         
-    jobs = db.paginate(stmt, page=request.args.get('page', 1, type=int), per_page=10)
+    jobs = db.paginate(stmt, page=request.args.get('page', 1, type=int), per_page=10) #zeigt nur 10 Jobs pro Seite;Seitenwechsel möglich
     
     return render_template('helfer_stellenangebot.html', form=form, jobs=jobs)
 

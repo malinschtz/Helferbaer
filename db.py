@@ -26,7 +26,7 @@ class User(db.Model, UserMixin):    #Quelle UserMixin: Flask-Login, Abschnitt "Y
 
     jobs_created = db.relationship(
         "Job",
-    foreign_keys='Job.kundeId',
+        foreign_keys='Job.kundeId',
         back_populates="kunde"
     )
 
