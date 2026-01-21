@@ -11,8 +11,8 @@ bcrypt = Bcrypt(app)
 db = SQLAlchemy()
 db.init_app(app)
 
- 
-class User(db.Model, UserMixin):
+
+class User(db.Model, UserMixin):    #Quelle UserMixin: Flask-Login, Abschnitt "Your User Class"
     __tablename__ = "user"
     userId = db.Column(db.Integer, primary_key=True, index=True)
     name = db.Column(db.String, nullable=False)
@@ -36,11 +36,11 @@ class User(db.Model, UserMixin):
         back_populates="helfer"
     )
 
-    def get_id(self):
+    def get_id(self):   #Quelle: KI Prompt 2
         return str(self.userId)
     
     #lädt Stunden des aktuellen Monats für Stundenkonto Kunde
-    @property
+    @property   #Quelle: KI Promt 3, Python property-Dekorator
     def current_month_hours_kunde(self):
         current_month = date.today().replace(day=1)
         next_month = (current_month + timedelta(days=32)).replace(day=1)        
@@ -297,7 +297,6 @@ def insert_sample():
             helferId = 2
         )
 
-        
         db.session.add_all([cat1, cat2, cat3, stat1, stat2, stat3, helfer1, helfer2, kunde1, kunde2, job1, job2, job3, job4, job5, job6])
         db.session.commit()
     click.echo("Sample-Daten eingefügt")

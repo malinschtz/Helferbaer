@@ -117,7 +117,7 @@ def helfer_stellenangebot():
     categories = db.session.execute(select(Category)).scalars()
     form.category.choices = [(0, 'Alle')] + [(c.catId, c.catName) for c in categories]
     
-    #db.session.execute(select(Model)) führt zu Problem wegen Rückgabe Objekt, Quelle: KI Prompi 1
+    #db.session.execute(select(Model)) führt zu Problem wegen Rückgabe Objekt, Quelle: KI Prompt 1
     stmt = select(Job).where(Job.statusId == 1).order_by(Job.date.asc())
 
     if form.validate_on_submit():
