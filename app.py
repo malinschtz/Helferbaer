@@ -297,6 +297,11 @@ def kunde_job_erledigt(job_id):
     flash('Job als erledigt markiert!', 'success')
     return redirect(url_for('kunde'))
 
-
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('Erfolgreich ausgeloggt.', 'info')
+    return redirect(url_for('index'))
    
 
