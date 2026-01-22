@@ -1,5 +1,6 @@
 import click
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import select
 from flask_login import UserMixin
 from datetime import date, timedelta
 from flask_bcrypt import Bcrypt
@@ -40,6 +41,7 @@ class User(db.Model, UserMixin):    #Quelle UserMixin: Flask-Login, Abschnitt "Y
         return str(self.userId)
     
     #lädt Stunden des aktuellen Monats für Stundenkonto Kunde
+    #@property wandelt eine Methode in ein virtuelles Attribut
     @property   #Quelle: KI Promt 3, Python property-Dekorator
     def current_month_hours_kunde(self):
         current_month = date.today().replace(day=1)
@@ -77,9 +79,8 @@ class User(db.Model, UserMixin):    #Quelle UserMixin: Flask-Login, Abschnitt "Y
     def get_jobs_by_status_kunde(self):
         jobs = Job.query.filter(
             Job.kundeId == self.userId
-        ).order_by(Job.date.desc()).all()
+            ).order_by(Job.date.desc()).all()
         
-        # Trennung: angefragt (offen/gebucht) vs erledigt
         angefragte_jobs = [j for j in jobs if j.statusId in [1,2]] 
         erledigte_jobs = [j for j in jobs if j.statusId == 3] 
         
@@ -94,7 +95,6 @@ class User(db.Model, UserMixin):    #Quelle UserMixin: Flask-Login, Abschnitt "Y
             Job.helferId == self.userId
         ).order_by(Job.date.desc()).all()
         
-        # Trennung: gebuchte vs erledigt
         gebuchte_jobs = [j for j in jobs if j.statusId == 2]
         erledigte_jobs = [j for j in jobs if j.statusId == 3] 
         
@@ -103,18 +103,6 @@ class User(db.Model, UserMixin):    #Quelle UserMixin: Flask-Login, Abschnitt "Y
             'erledigte_jobs': erledigte_jobs
         }
     
-    #Stundenkonto für Helfer Dashboard
-    @property
-    def gesamtArbeitsStunden(self):
-        if self.role != 'helfer':
-            return 0
-
-        return sum(
-            job.realHours or 0
-            for job in self.jobs_taken
-            if job.statusId == 3  
-        )
-
 
 class Category(db.Model):
     __tablename__ = "category"
