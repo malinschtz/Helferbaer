@@ -77,9 +77,9 @@ class User(db.Model, UserMixin):    #Quelle UserMixin: Flask-Login, Abschnitt "Y
 
     #angefragte und erledeigte Jobs für Kunden Dashboard
     def get_jobs_by_status_kunde(self):
-        jobs = Job.query.filter(
-            Job.kundeId == self.userId
-            ).order_by(Job.date.desc()).all()
+        jobs = db.session.execute(select(Job).filter_by(
+            kundeId=self.userId
+        ).order_by(Job.date.desc())).scalars().all()
         
         angefragte_jobs = [j for j in jobs if j.statusId in [1,2]] 
         erledigte_jobs = [j for j in jobs if j.statusId == 3] 
@@ -91,9 +91,9 @@ class User(db.Model, UserMixin):    #Quelle UserMixin: Flask-Login, Abschnitt "Y
     
     #angefragte und erledeigte Jobs für Helfer Dashboard
     def get_jobs_by_status_helfer(self):
-        jobs = Job.query.filter(
-            Job.helferId == self.userId
-        ).order_by(Job.date.desc()).all()
+        jobs = db.session.execute(select(Job).filter_by(
+            helferId=self.userId
+        ).order_by(Job.date.desc())).scalars().all()
         
         gebuchte_jobs = [j for j in jobs if j.statusId == 2]
         erledigte_jobs = [j for j in jobs if j.statusId == 3] 
