@@ -15,7 +15,7 @@ db.init_app(app)
 
 class User(db.Model, UserMixin):    #Quelle UserMixin: Flask-Login, Abschnitt "Your User Class"
     __tablename__ = "user"
-    userId = db.Column(db.Integer, primary_key=True, index=True)
+    userId = db.Column(db.Integer, primary_key=True, index=True)    #
     name = db.Column(db.String, nullable=False)
     firstName = db.Column(db.String, nullable=False)
     birthday = db.Column(db.Date, nullable=False)
