@@ -26,7 +26,7 @@ Technisch basiert die WebApp auf Flask und Python sowie SQLAlchemy für ORM, WTF
 
 Die App folgt einer klassichen Flask-Struktur mit klarer Trennung zwischen Routen, Datenmodell, Forms und Templates.
 
-**app.py** ist das Herzstück der Anwendung und enthält sämtliche HTTP-Routen. Es gibt für jede Nutzergruppe eine Login- und Registrierungsroute (``/helfer/anmelden``, ``/helfer/registrieren``, ``/kunde/anmelden``, ``/kunde/registrieren``), rollenspezifische Dashboards (``/kunde``, ``/helfer``) und alle Job-Management-Funktionen, vom Erstellen über das Filtern und Buchen bis zum Markieren als erledigt (z.B. ``/helfer/job_buchen/int:job_id`` oder ``/kunde/job/int:job_id/done``).  
+**app.py** ist das Herzstück der Anwendung und enthält sämtliche HTTP-Routen. Es gibt für jede Nutzergruppe eine Login- und Registrierungsroute (``/helfer/anmelden``, ``/helfer/registrieren``, ``/kunde/anmelden``, ``/kunde/registrieren``), rollenspezifische Dashboards (``/kunde``, ``/helfer``) und alle Job-Management-Funktionen, vom Erstellen über das Filtern und Buchen bis zum Markieren als erledigt (z.B. ``/helfer/job_buchen/<int:job_id>`` oder ``/kunde/job/<int:job_id>/done``).  
 Die Routen unterscheiden unterscheiden explizit zwischen GET- und POST-Requests: GET-Requests rendern Templates mit Daten (z.B. ``/kunde`` lädt Jobs via ``current_user.get_jobs_by_status_kunde()`` aus der DB und übergibt diese an das Template), während POST-Requests Formulardaten verarbeiten und DB-Änderungen durchführen (z.B. ``/kunde/stellenangebot`` validiert StellenangebotForm und erstellt einen neuen Job der via Commit in der DB gespeichert wird).
 
 **db.py** definiert das Datenmodell. Es gibt 4 Entitäten:  
@@ -51,6 +51,31 @@ Dieser Abschnitt beschreibt Aspekte, die für das Verständnis der Anwedung zent
 ### Authentifizierung und Autorisierung
 
 Die App nutzt Flask-Login für Session-Management und Flask-Bcrypt für Passwort-Hashing. Jeder Request lädt den User-Zustand automatisch neu aus der Datenbank mithilfe der Methode ``load_user(user_id)``, die ``db.session.get(User, int(user_id))`` aufruft. Beim Login wird das eingegebene Passwort mit ``bcrypt.check_password_hash(user.password, form.password.data)`` mit dem gespeicherten Hash validiert.  
-Alle geschützten Routen verwenden den ``@login_required``-Decorator. Zusätzlich prüfen rollenspezifische Routen explizit current_user.role. Versucht ein Helfer auf ``/kunde`` zuzugreifen, wird er ausgeloggt und zur Index-Seite umgeleitet.
+Alle geschützten Routen verwenden den ``@login_required``-Decorator. Zusätzlich prüfen rollenspezifische Routen explizit ``current_user.role``. Versucht ein Helfer auf ``/kunde`` zuzugreifen, wird er ausgeloggt und zur Index-Seite umgeleitet.
 
-[Describe anything that is important for a solid understanding of your codebase. Most likely, you want to explain the behavior of (parts of) your application. In this section, you may also link to important [design decisions](../design-decisions.md).]
+### Job-Lebenszyklus und Status-Management
+
+Jobs durchlaufen drei Zustände, die über ``statusId`` gesteuert werden:
+```mermaid
+stateDiagram-v2
+    [*] --> Offen: Kunde erstellt Job
+    Offen --> Gebucht: Helfer bucht Job
+    Gebucht --> Erledigt: Kunde markiert als fertig
+    Erledigt --> [*]
+    
+    note right of Offen: statusId=1, helferId=NULL
+    note right of Gebucht: statusId=2, helferId gesetzt
+    note right of Erledigt: statusId=3, realHours erfasst
+```
+**Status-Übergänge:**
+- Offen -> Gebucht: POST-Request in ``/helfer/job_buchen/<int:job_id>`` setzt ``job.helferId=current_user.userId`` und ``job.statusId=2``
+- Gebucht -> Erledigt: POST-Request in ``/kunde/job/<int:job_id>/done`` setzt ``job.statusId=3`` und erfasst ``job.realHours``
+
+### Stundenkonto
+Die @property-Methoden ``current_month_hours_kunde`` und ``current_month_hours_helfer`` berechnen dynamisch die Stunden des aktuellen Monats. Sie filtern Jobs zwischen dem 1. des aktuellen Monats und dem 1. des Folgemonats.  
+Für Kunden werden drei Kategorien gebildet: offene Stunden (Jobs mit ``statusId=1``, Column ``hours``), gebuchte (Jobs mit ``statusId=2``, Column ``hours``) und erledigte (Jobs mit ``statusId=3``, Column ``realHours``). Bei Helfern werden nur die Kategorien gebuchte und erledigte Stunden gebildet.
+
+### Template-System für wiederverwendbare Jobs
+
+to do
+
