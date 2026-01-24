@@ -48,15 +48,9 @@ Die Templates sind nach Rollen strukturiert: **Helfer-Templates** wie ``helfer_s
 
 Dieser Abschnitt beschreibt Aspekte, die für das Verständnis der Anwedung zentral sind, unabhängig davon, in welcher Datei sie implementiert sind.
 
-<details open markdown="block"> 
-{: .text-delta } 
-<summary>Table of contents</summary> 
-+ ToC 
-{: toc } 
-</details>
-
 ### Authentifizierung und Autorisierung
 
-Die App nutzt Flask-Login für Session-Management und Flask-Bcrypt für Passwort-Hashing. Jeder Request lädt den User-Zustand neu aus der Datenbank via ``load_user(user_id)``,
+Die App nutzt Flask-Login für Session-Management und Flask-Bcrypt für Passwort-Hashing. Jeder Request lädt den User-Zustand automatisch neu aus der Datenbank mithilfe der Methode ``load_user(user_id)``, die ``db.session.get(User, int(user_id))`` aufruft. Beim Login wird das eingegebene Passwort mit ``bcrypt.check_password_hash(user.password, form.password.data)`` mit dem gespeicherten Hash validiert.  
+Alle geschützten Routen verwenden den ``@login_required``-Decorator. Zusätzlich prüfen rollenspezifische Routen explizit current_user.role. Versucht ein Helfer auf ``/kunde`` zuzugreifen, wird er zum Dashboard umgeleitet und erhält eine Flash-Message.
 
 [Describe anything that is important for a solid understanding of your codebase. Most likely, you want to explain the behavior of (parts of) your application. In this section, you may also link to important [design decisions](../design-decisions.md).]
