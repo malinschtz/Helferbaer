@@ -49,6 +49,13 @@ Die Routen unterscheiden unterscheiden explizit zwischen GET- und POST-Requests:
 Außerdem gibt es noch die Entität ``Job``, die alle relevanten Jobdaten enthält (z.B Beschreibung und Datum) sowie die Foreign Keys ``kundeId``, ``helferId``, ``statusId`` und ``catId``.  
 Die Entitäten ``Status`` und ``Category`` definieren die Zustände und Kategorien, die ein Job haben kann.
 
+**forms.py** enthält alle WTForms-Klassen, die sowohl Validierung als auch CSRF-Schutz bereitstellen. Die ``LoginForm`` validiert Email-Format und ob ein Passwort eingegeben wurde, während ``RegisterForm`` auch Checks wie z.B. Mindestlänge für Name und Passwort oder Passwort-Bestätigung via ``EqualTo``-Validator durchführt. Die ``StellenangebotForm`` dient für die Erstellung von Stellenangeboten und hat z.B. ein ``SelectField`` mit drei vordefinierten Kategorien.
+Die ``JobFilterForm`` ermöglicht Helfern das Filtern offener Jobs nach Freitext-Suche, Kategorie, PLZ (5-stellig) und minimalen Stunden, dabei ist der Input aller Felder optional.
+Alle Formulare nutzen außerdem ein ``SubmitField``. 
+
+**templates/** organisiert alle Jinja2-Templates. Alle Templates erben von ``base.html``. Diese stellt die Bootstrap-Navbar bereit. Die Links der Navbar ändern sich dynamisch je nach Benutzerrolle. Außerdem rendert ``base.html`` Flash-Messages mit Schließ-Buttons für Erfolgs- und Fehlermeldungen.  
+Die Templates sind nach Rollen strukturiert: **Helfer-Templates** wie ``helfer_startseite.html`` zeigen das Dashboard mit gebuchten und erledigten Jobs sowie das Stundenkonto des aktuellen Monats, ``helfer_stellenangebote.html`` zeigen eine Suchmaske sowie offene Jobs mithilfe von Bootstrap-Cards inklusive Buchen-Button und über ``helfer_kunde_profil.html`` können Kundendetails eingesehen werden. Die **Kunden-Templates** sind identisch aufgebaut, wobei ``kunde_stellenangebote`` natürlich das Formular rendert, um ein Stellenangebot aufzugeben.  
+**Login/Register-Templates** (z.B. ``helfer_anmelden.html``, ``kunde_registrieren.html``) sind rollenspezifisch getrennt, rendern aber identische Forms mit unterschiedlichen Überschriften. Die index.html dient als Startseite mit Buttons für Helfer/Kunden-Registrierung. 
 
 
 ## Cross-cutting concerns
