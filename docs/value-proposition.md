@@ -38,13 +38,13 @@ Leonie arbeitet als selbstständige Alltagshelferin und betreut mehrere Klient:i
 
     + Profil erstellen: Anna legt ihr Profil an.
     + Stellenangebot veröffentlichen: Sie erstellt ein Stellenangebot mit Beschreibung, Zeitraum und Kategorie.
-    + Anfragen erhalten: Alltagshelfer sehen ihr Angebot und können sich direkt darauf bewerben. Anna bekommt Echtzeit-Benachrichtigungen.
-    + Auswahl treffen: Anna prüft Profile der Helfer und kann Anfragen annehmen oder ablehnen. Nach Annahme wird der Termin als gebucht in ihren Anfragen angezeigt. 
+    + Hilfe erhalten: Alltagshelfer sehen ihr Angebot und können es direkt buchen.
+    + Stunden im Blick halten: Im Stundenkonto kann sie gut im Blick behalten wie viele Stunden diesen Monat schon erledigt wurden und wie viele noch offen sind.
 
 2. Alltagshelfer (Leonie) 
 
     + Profil anlegen: Leonie erstellt ihr Helferprofil.
     + Stellenangebote entdecken: Sie durchsucht die Angebotsliste und sieht passende Gesuche basierend auf Ort, Zeit und Kategorie.
-    + Anfrage senden: Bei passenden Angeboten stellt er mit einem Klick eine Anfrage an Anna.
-    + Rückmeldung erhalten: Er bekommt eine Annahme oder Ablehnung. Bei Annahme erscheint der neue Auftrag automatisch in seinem Profil.
+    + Job buchen: Bei passenden Angeboten bucht sie mit einem Klick den Job von Anna.
+    + Stunden im Blick halten: Im Stundenkonto kann sie gut im Blick behalten wie viele Stunden diesen Monat schon erledigt wurden und wie viele noch offen sind.
 

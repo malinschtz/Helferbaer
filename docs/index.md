@@ -3,29 +3,18 @@ title: Home
 nav_order: 0
 ---
 
-{: .attention }
-> Any text enclosed by `[ ]` are placeholders, including the opening and closing brackets.
->
-> You may delete this `attention` box.
-
 # Helferbär
 
-[Project description]
+Helferbär verbindet  Menschen ab Pflegegrad 1 mit zuverlässigen Helfern für Alltagsaufgaben wie Einkaufen, Arztbesuche oder Gartenarbeit. Die Plattform ermöglicht es Kunden, schnell und unkompliziert Unterstützung zu finden, während Helfer flexibel Aufträge übernehmen und ihre geleisteten Stunden transparent nachverfolgen können. Ziel ist es, den Zugang zu nachbarschaftlicher Hilfe zu erleichtern und eine faire, organisierte Vermittlung zwischen beiden Seiten zu schaffen.
 
 ## Team members
 
 ### Malin Schütz
 
-About
-: Some info about Jane
-
 Matr.-Nr.
 : 77206685077
 
 ### Alisa Puzo
-
-About
-: Some info about Joe
 
 Matr.-Nr.
 : 77201073156
