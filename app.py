@@ -45,11 +45,13 @@ def index():
     
     return render_template('index.html')        
 
-@app.route('/helfer/', methods=['GET', 'POST'])
+@app.route('/helfer/', methods=['GET'])
 @login_required
 def helfer():
-    if request.method == 'POST':
-        return 
+    if current_user.role != 'helfer':
+        logout()
+        flash('Zugriff verweigert', 'error')
+        return render_template('index.html') 
     
     # Stundenkonto
     hours = current_user.current_month_hours_helfer
@@ -112,6 +114,11 @@ def helfer_registrieren():
 @app.route('/helfer/stellenangebot', methods=['GET', 'POST'])
 @login_required
 def helfer_stellenangebot():
+    if current_user.role != 'helfer':
+        logout()
+        flash('Zugriff verweigert', 'error')
+        return render_template('index.html') 
+    
     form = JobFilterForm()
 
     categories = db.session.execute(select(Category)).scalars()
@@ -144,6 +151,10 @@ def helfer_profil():
 @app.route('/helfer/kunde_profil/<int:kunde_id>', methods=['GET'])
 @login_required
 def helfer_kunde_profil(kunde_id):
+    if current_user.role != 'helfer':
+        logout()
+        flash('Zugriff verweigert', 'error')
+        return render_template('index.html') 
     
     kunde = db.session.get(User, kunde_id)
     # Alle gemeinsamen Jobs
@@ -159,6 +170,11 @@ def helfer_kunde_profil(kunde_id):
 @app.route('/helfer/job_buchen/<int:job_id>', methods=['POST'])
 @login_required
 def helfer_job_buchen(job_id):
+    if current_user.role != 'helfer':
+        logout()
+        flash('Zugriff verweigert', 'error')
+        return render_template('index.html') 
+
     job = db.session.get(Job, job_id)
     job.helferId = current_user.userId
     job.statusId = 2 
@@ -166,11 +182,14 @@ def helfer_job_buchen(job_id):
     flash(f'"{job.description[:30]}..." gebucht! Details im Dashboard.', 'success')
     return redirect(url_for('helfer_stellenangebot'))
 
-@app.route('/kunde/', methods=['GET', 'POST'])
+@app.route('/kunde/', methods=['GET'])
 @login_required
 def kunde():
-    if request.method == 'POST':
-        return
+    if current_user.role != 'kunde':
+        logout()
+        flash('Zugriff verweigert', 'error')
+        return render_template('index.html') 
+    
     #Stundenkonto
     hours = current_user.current_month_hours_kunde
     DE_MONTHS = {1: 'Januar', 2: 'Februar', 3: 'März', 4: 'April',5: 'Mai', 6: 'Juni', 7: 'Juli', 8: 'August',9: 'September', 10: 'Oktober', 11: 'November', 12: 'Dezember'}
@@ -182,7 +201,7 @@ def kunde():
 
 @app.route('/kunde/anmelden', methods=['GET', 'POST'])
 def kunde_anmelden():
-    form = LoginForm()
+    form = LoginForm()   
     if form.validate_on_submit():
         user = db.session.execute(   
             select(User).filter_by(email=form.email.data)
@@ -231,6 +250,11 @@ def kunde_registrieren():
 @app.route('/kunde/stellenangebot', methods=['GET', 'POST'])
 @login_required
 def kunde_stellenangebot():
+    if current_user.role != 'kunde':
+        logout()
+        flash('Zugriff verweigert', 'error')
+        return render_template('index.html') 
+
     form = StellenangebotForm()
 
     if form.validate_on_submit():
@@ -264,8 +288,10 @@ def kunde_profil():
 @app.route('/kunde/helfer_profil/<int:helfer_id>', methods=['GET'])
 @login_required
 def kunde_helfer_profil(helfer_id):
-    if request.method == 'POST':
-        return
+    if current_user.role != 'kunde':
+        logout()
+        flash('Zugriff verweigert', 'error')
+        return render_template('index.html') 
     
     helfer = db.session.get(User, helfer_id)
     # Alle gemeinsamen Jobs
@@ -287,6 +313,11 @@ def kunde_helfer_profil(helfer_id):
 @app.route('/kunde/job/<int:job_id>/done', methods=['POST'])
 @login_required
 def kunde_job_erledigt(job_id):
+    if current_user.role != 'kunde':
+        logout()
+        flash('Zugriff verweigert', 'error')
+        return render_template('index.html') 
+    
     job = job = db.session.get(Job, job_id)
     real_hours = request.form.get('real_hours')
     
