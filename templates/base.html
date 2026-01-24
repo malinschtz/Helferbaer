@@ -16,9 +16,9 @@
     <body>
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid">
-                <!-- Login-abhängiges Logo -->
+                
                 {% if not current_user.is_authenticated %}
-                <a class="navbar-brand" href="{{ url_for('index') }}"> <!-- Logo anklickbar -->
+                <a class="navbar-brand" href="{{ url_for('index') }}"> 
                     <img src="{{ url_for('static', filename='images/helferbaer_logo.png') }}" 
                     alt="Logo" width="40" height="32" class="d-inline-block align-text-top">Helferbär
                 </a>
