@@ -202,3 +202,21 @@ Malin Schütz
 **Sample output:**
 
 ![helfer_kunde_profil()](../assets/images/reference13.png)
+
+---
+
+## Index
+
+### `index()`
+
+**Route:** `/`
+
+**Methods:** `GET` `POST`
+
+**Purpose:** Zeigt Startseite mit Auswahl ziwschen Helfer- und Kunden-Login bzw. -Registrierung (`GET`). Verarbeitet Button-Klicks und leitet zu entsprechenden Routen weiter (`POST`).
+
+**Sample output:**
+
+![helfer()](../assets/images/reference14.png)
+
+---
