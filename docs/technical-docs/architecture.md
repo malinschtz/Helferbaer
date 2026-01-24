@@ -39,8 +39,8 @@ Technisch basiert die WebApp auf Flask und Python sowie SQLAlchemy für ORM, WTF
 ## Codemap
 
 Die App folgt einer klassichen Flask-Struktur mit klarer Trennung zwischen Routen, Datenmodell, Forms und Templates.  
-**app.py** ist das Herzstück der Anwendung und enthält sämtliche HTTP-Routen. Es gibt für jede Nutzergruppe eine Login- und Registrierungsroute (``/helfer/anmelden, /helfer/registrieren, /kunde/anmelden, /kunde/registrieren``), rollenspezifische Dashboards (`/kunde, /helfer`) und alle Job-Management-Funktionen, vom Erstellen über das Filtern und Buchen bis zum Markieren als erledigt (z.B. /helfer/job_buchen/int:job_id oder /kunde/job/int:job_id/done).  
-Die Routen unterscheiden unterscheiden explizit zwischen GET- und POST-Requests: GET-Requests rendern Templates mit Daten (z.B. /kunde lädt Jobs via current_user.get_jobs_by_status_kunde() aus der DB und übergibt diese an das Template), während POST-Requests Formulardaten verarbeiten und DB-Änderungen durchführen (z.B. /kunde/stellenangebot validiert StellenangebotForm und erstellt einen neuen Job der via Commit in der DB gespeichert wird).
+**app.py** ist das Herzstück der Anwendung und enthält sämtliche HTTP-Routen. Es gibt für jede Nutzergruppe eine Login- und Registrierungsroute (``/helfer/anmelden``, ``/helfer/registrieren``, ``/kunde/anmelden``, ``/kunde/registrieren``), rollenspezifische Dashboards (``/kunde, /helfer``) und alle Job-Management-Funktionen, vom Erstellen über das Filtern und Buchen bis zum Markieren als erledigt (z.B. ``/helfer/job_buchen/int:job_id`` oder ``/kunde/job/int:job_id/done``).  
+Die Routen unterscheiden unterscheiden explizit zwischen GET- und POST-Requests: GET-Requests rendern Templates mit Daten (z.B. ``/kunde`` lädt Jobs via ``current_user.get_jobs_by_status_kunde()`` aus der DB und übergibt diese an das Template), während POST-Requests Formulardaten verarbeiten und DB-Änderungen durchführen (z.B. ``/kunde/stellenangebot`` validiert StellenangebotForm und erstellt einen neuen Job der via Commit in der DB gespeichert wird).
 
 ## Cross-cutting concerns
 
