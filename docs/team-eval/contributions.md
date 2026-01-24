@@ -17,16 +17,24 @@ nav_order: 4
 {: toc }
 </details>
 
-## [Jane Dane]
+## Malin Schütz
 
 Contributions
-: Lorem ipsum dolor
-: Consetetur sadipscing elitr
-: ...
+: Entwicklung und Gestaltung der Frontend-Templates für die Kundenseite, inklusive Dashboard und Formularansichten
+: Implementierung zentraler Backend-Logik in app.py
+: Erstellung und Pflege der Formulare (forms.py) mit Flask-WTF
 
-## [Joe Doe]
+
+## Alisa Puzo
 
 Contributions
-: Diam nonumy eirmod
-: Tempor invidunt ut labore
-: ...
+: Entwicklung und Gestaltung der Frontend-Templates für die Helferseite, inklusive Dashboard und Formularansichten
+: Konzeption und Implementierung des Datenbankmodells (db.py)
+
+
+## Gemeinsam:
+
+Joint Contributions:
+: Entwicklung und Gestaltung UI-Screen
+: Ausfüllen und Überarbeiten der Projekt-Dokumentation (docs)
+: Abstimmung von Datenmodellen und Views

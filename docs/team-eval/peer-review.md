@@ -30,3 +30,21 @@ nav_order: 3
 ### Tip for the future (Wunsch)
 
 [What should be changed or strengthened for the point of view of the reviewer?]
+
+
+## Alisa Puzo - review 2
+
+### My observation (Wahrnehmung)
+
+Nach meiner Beobachtung hätten wir die Aufgabenverteilung zu Beginn des Projekts klarer strukturieren sollen. Da anfangs kein konkreter Arbeitsplan existierte und direkt mit der Umsetzung begonnen wurde, war es schwer zu wissen, wie man selbst vorgehen kann, ohne ein Hindernis für den anderen zu werden.
+Aber bei Problemen oder Unklarheiten konnten wir uns jederzeit austauschen und auch persönlich treffen, um gemeinsam Lösungen zu finden.
+
+### Effect on me (Wirkung)
+
+Durch die fehlende Struktur und Aufgabenverteilung war es für mich anfangs schwer zu erkennen, wie ich mich aktiv einbringen oder helfen kann.  Zudem fiel es mir schwer einzuschätzen, wie ich eigenständig weiterarbeiten sollte, wodurch ich mich zu Beginn unsicher gefühlt habe.
+
+Durch die Gespräche und persönlichen Treffen konnte sich dies im Projektverlauf bessern. Dennoch denke ich, dass das Fehlen einer Struktur am Anfang Auswirkungen auf die Verteilung unserer Beiträge am Projekt hatte. 
+
+### Tip for the future (Wunsch)
+
+Für die Zukunft würde ich mir wünschen, dass die Aufgabenverteilung bereits zu Beginn des Projekts festgelegt wird, um eine bessere Struktur zu schaffen.
