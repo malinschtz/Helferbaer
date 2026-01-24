@@ -5,7 +5,7 @@ nav_order: 3
 ---
 
 {: .label }
-[Jane Dane]
+Malin Schütz
 
 {: .no_toc }
 # Reference documentation
@@ -24,19 +24,75 @@ nav_order: 3
 {: toc }
 </details>
 
-## [Section / module]
+## Authentifikation
 
-### `function_definition()`
+### `helfer_anmelden()`
 
-**Route:** `/route/`
+**Route:** `/helfer/anmelden`
 
-**Methods:** `POST` `GET` `PATCH` `PUT` `DELETE`
+**Methods:** `GET` `POST`
 
-**Purpose:** [Short explanation of what the function does and why]
+**Purpose:** Rendert Login-Formular für Helfer (`GET`) und authentifiziert User mit Email und Passwort (`POST`). Bei Erfolg wird User mithilfe von `login_user()` eingeloggt und zu `/helfer` weitergeleitet. 
 
 **Sample output:**
 
-[Show an image, string output, or similar illustration -- or write NONE if function generates no output]
+GET:  
+![helfer_anmelden() GET](../assets/images/reference1.png)
+
+POST:  
+![helfer_anmelden() POST](../assets/images/reference2.png)
+
+---
+
+### `kunde_anmelden()`
+
+**Route:** `/kunde/anmelden`
+
+**Methods:** `GET` `POST`
+
+**Purpose:** Identisch zu `/helfer/anmelden`, aber für Kunden-Rolle. Redirect nach Login zu `/kunde`.
+
+**Sample output:**
+
+GET:  
+![kunde_anmelden() GET](../assets/images/reference3.png)
+
+POST:  
+![kunde_anmelden() POST](../assets/images/reference4.png)
+
+---
+
+### `helfer_registrieren()`
+
+**Route:** `/helfer/registrieren`
+
+**Methods:** `GET` `POST`
+
+**Purpose:** Rendert Register-Formular für Helfer (`GET`). Erstellt neuen User mit `role='helfer'`, loggt User nach erfolgreicher Registrierung mithilfe von `login_user()` ein und leitet zu `/helfer` weiter (`POST`).
+
+**Sample output:**
+
+GET:  
+![helfer_registrieren() GET](../assets/images/reference5.png)
+POST:  
+![helfer_registrieren() POST](../assets/images/reference6.png)
+
+---
+
+### `kunde_registrieren()`
+
+**Route:** `/kunde/registrieren`
+
+**Methods:** `GET` `POST`
+
+**Purpose:** Identisch zu `/helfer/registrieren`, aber für Kunden-Rolle. Redirect nach Registrierung zu `/kunde`.
+
+**Sample output:**
+
+GET:  
+![kunde_registrieren() GET](../assets/images/reference7.png)
+POST:  
+![kunde_registrieren() POST](../assets/images/reference8.png)
 
 ---
 
