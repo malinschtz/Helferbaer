@@ -1,2 +1,2 @@
 # Helferbaer
-Plattform als Schnittstelle zwischen Alttagshelfer und Angehörigen von Pflegebedürftigen.
+Plattform als Schnittstelle zwischen Alttagshelfer und Menschen ab Pflegegrad 1.
