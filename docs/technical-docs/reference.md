@@ -57,7 +57,6 @@ Malin Schütz
 
 **Sample output:**
 
-GET:  
 ![helfer_registrieren() GET](../assets/images/reference3.png)
 
 ---
@@ -144,20 +143,62 @@ GET:
 
 **Sample output:**
 
-![kunde_job_erledigt()](../assets/images/reference9.png)
+![kunde_helfer_profil()](../assets/images/reference9.png)
 
 ---
 
-## [Example, delete this section] Insert sample data
+## Helfer-Funktionen
 
-### `run_insert_sample()`
+### `helfer()`
 
-**Route:** `/insert/sample`
+**Route:** `/helfer/`
 
 **Methods:** `GET`
 
-**Purpose:** Flush the database and insert sample data set
+**Purpose:** Zeigt Helfer-Dashboard mit drei Bereichen: Gebuchte Anfragen, erledigte Jobs und Stundenkonto für den aktuellen Monat. Nur für eingeloggte Helfer zugänglich.
 
 **Sample output:**
 
-Browser shows: `Database flushed and populated with some sample data.`
+![helfer()](../assets/images/reference10.png)
+
+---
+
+### `helfer_stellenangebot()`
+
+**Route:** `/helfer/stellenangebot`
+
+**Methods:** `GET` `POST`
+
+**Purpose:** Listet alle offenen Jobs (statusId=1) mit optionaler Such-/Filterfunktion. GET zeigt ungefilterte Liste, POST wendet Filter aus `JobFilterForm` an (Freitext-Suche, Kategorie, PLZ, minimale Stunden).
+
+**Sample output:**
+
+![helfer_stellenangebot()](../assets/images/reference11.png)
+
+---
+
+### `helfer_job_buchen()`
+
+**Route:** `/helfer/job_buchen/<int:job_id>`
+
+**Methods:** `POST`
+
+**Purpose:** Bucht offenen Job für aktuellen Helfer. Setzt `job.helferId=current_user.userId` und `job.statusId=2`
+
+**Sample output:**
+
+![kunde_job_erledigt()](../assets/images/reference12.png)
+
+---
+
+### `helfer_kunde_profil()`
+
+**Route:** `/helfer/kunde_profil/<int:kunde_id>`
+
+**Methods:** `GET`
+
+**Purpose:** Zeigt Profil eines Kunden für den Helfer an. Nützlich für den Helfer um zu erfahren, wer der Helfer ist, wie lange er schon bei Helferbär angemeldet ist und ob schon gemeinsame Jobs erledigt wurden.
+
+**Sample output:**
+
+![helfer_kunde_profil()](../assets/images/reference13.png)
