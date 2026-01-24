@@ -10,13 +10,6 @@ Malin Schütz
 {: .no_toc }
 # Reference documentation
 
-{: .attention }
-> This page collects internal functions, routes with their functions, and APIs (if any).
-> 
-> See [Uber](https://developer.uber.com/docs/drivers/references/api) or [PayPal](https://developer.paypal.com/api/rest/) for exemplary high-quality API reference documentation.
->
-> You may delete this `attention` box.
-
 <details open markdown="block">
 {: .text-delta }
 <summary>Table of contents</summary>
@@ -36,11 +29,7 @@ Malin Schütz
 
 **Sample output:**
 
-GET:  
-![helfer_anmelden() GET](../assets/images/reference1.png)
-
-POST:  
-![helfer_anmelden() POST](../assets/images/reference2.png)
+![helfer_anmelden()](../assets/images/reference1.png)
 
 ---
 
@@ -53,12 +42,8 @@ POST:
 **Purpose:** Identisch zu `/helfer/anmelden`, aber für Kunden-Rolle. Redirect nach Login zu `/kunde`.
 
 **Sample output:**
-
-GET:  
-![kunde_anmelden() GET](../assets/images/reference3.png)
-
-POST:  
-![kunde_anmelden() POST](../assets/images/reference4.png)
+ 
+![kunde_anmelden()](../assets/images/reference2.png)
 
 ---
 
@@ -73,9 +58,7 @@ POST:
 **Sample output:**
 
 GET:  
-![helfer_registrieren() GET](../assets/images/reference5.png)
-POST:  
-![helfer_registrieren() POST](../assets/images/reference6.png)
+![helfer_registrieren() GET](../assets/images/reference3.png)
 
 ---
 
@@ -89,40 +72,79 @@ POST:
 
 **Sample output:**
 
-GET:  
-![kunde_registrieren() GET](../assets/images/reference7.png)
-POST:  
-![kunde_registrieren() POST](../assets/images/reference8.png)
+![kunde_registrieren()](../assets/images/reference4.png)
 
 ---
 
-## [Example, delete this section] Show to-do lists
+### `logout()`
 
-### `get_lists()`
+**Route:** `/logout`
 
-**Route:** `/lists/`
+**Methods:** `GET` 
 
-**Methods:** `GET`
-
-**Purpose:** Show all to-do lists.
+**Purpose:** Beendet aktuelle User-Session und leitet zur Startseite weiter.
 
 **Sample output:**
 
-![get_lists() sample](../assets/images/fswd-intro_00.png)
+![kunde_registrieren() GET](../assets/images/reference5.png)
 
 ---
 
-### `get_list_todos(list_id)`
+## Kunden-Funktionen
 
-**Route:** `/lists/<int:list_id>`
+### `kunde()`
+
+**Route:** `/kunde/`
 
 **Methods:** `GET`
 
-**Purpose:** Retrieve all to-do items of to-do list with ID `list_id` from database and present to user.
+**Purpose:** Zeigt Kunden-Dashboard mit drei Bereichen: Offene/gebuchte Anfragen, erledigte Jobs und Stundenkonto für den aktuellen Monat. Nur für eingeloggte Kunden zugänglich.
 
 **Sample output:**
 
-![get_list_todos() sample](../assets/images/fswd-intro_02.png)
+![kunde()](../assets/images/reference6.png)
+
+---
+
+### `kunde_stellenangebot()`
+
+**Route:** `/kunde/stellenangebot`
+
+**Methods:** `GET` `POST`
+
+**Purpose:** Rendert Formular zum Erstellen neuer Jobs (`GET`). Speichert Jobs mit `statusId=1` (offen) in DB und verknüpt `current_user.userId` als `kundeId` (`POST`). Optional als Vorlage speicherbar (`isTemplate=True`)
+
+**Sample output:**
+
+![kunde_stellenangebot()](../assets/images/reference7.png)
+
+---
+
+### `kunde_job_erledigt()`
+
+**Route:** `/kunde/job/<int:job_id>/done`
+
+**Methods:** `POST`
+
+**Purpose:** Setzt Job-Status auf 3 (erledigt) und erfasst tatsächlich gearbeitete Stunden (`realHours`).
+
+**Sample output:**
+
+![kunde_job_erledigt()](../assets/images/reference8.png)
+
+---
+
+### `kunde_helfer_profil()`
+
+**Route:** `/kunde/helfer_profil/<int:helfer_id>`
+
+**Methods:** `GET`
+
+**Purpose:** Zeigt Profil eines Helfers für den Kunden an. Nützlich für den Kunden um zu erfahren, wer der Helfer ist, wie lange er schon Alltagshelfer ist und ob schon gemeinsame Jobs erledigt wurden.
+
+**Sample output:**
+
+![kunde_job_erledigt()](../assets/images/reference9.png)
 
 ---
 

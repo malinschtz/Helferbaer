@@ -327,7 +327,7 @@ def kunde_job_erledigt(job_id):
     flash('Job als erledigt markiert!', 'success')
     return redirect(url_for('kunde'))
 
-@app.route('/logout')
+@app.route('/logout', methods=['GET'])
 @login_required
 def logout():
     logout_user()   #Quelle: Flask-Login, Abschnitt "Login Example"
