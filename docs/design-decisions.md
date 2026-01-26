@@ -65,9 +65,10 @@ Die Entscheidung fiel auf SQLAlchemy, weil es:
 Wir haben folgende Optionen betrachtet:
 
 + Direkter Zugriff mit Plain SQL
++ 
 + Zugriff über SQLAlchemy 
 
-| Kriterium | Plain SQL | SQLAlchemy |
+| Kriterium | Plain SQL ma| SQLAlchemy |
 | --- | --- | --- |
 | **Integration in Flask** | ❌ Manuelle SQL-Statements | ✔️ Nahtlose Integration |
 | **Objektorientiertes Design** | ❌ Trennung von SQL und Logik | ✔️ Modelle als Klassen |
