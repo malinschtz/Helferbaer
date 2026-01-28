@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_bootstrap import Bootstrap5
-from forms import LoginForm, RegisterForm, StellenangebotForm, JobFilterForm
+from forms import LoginForm, RegisterForm, StellenangebotForm, JobFilterForm, ProfileForm
 from sqlalchemy import select, func
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
 from flask_bcrypt import Bcrypt
@@ -334,4 +334,28 @@ def logout():
     flash('Erfolgreich ausgeloggt.', 'info')
     return redirect(url_for('index'))
    
+@app.route('/profil', methods=['GET', 'POST'])
+@login_required
+def profil():
+    form = ProfileForm(obj=current_user)   # Felder mit aktuellen Werten füllen
 
+    if form.validate_on_submit():
+        # 1. Prüfen, ob E-Mail schon von jemand anderem benutzt wird
+        existing = db.session.execute(select(User).filter_by(email=form.email.data)).scalar_one_or_none()
+
+        if existing and existing.userId != current_user.userId:
+            flash('Diese E-Mail ist bereits vergeben.', 'error')
+
+        else:
+            # User aktualisieren
+            current_user.firstName = form.firstName.data
+            current_user.name = form.name.data
+            current_user.email = form.email.data
+            current_user.phone = form.phone.data or None
+            db.session.commit()
+            flash('Profil erfolgreich aktualisiert!', 'success')
+            
+            # Zurück zum Dashboard
+            return redirect(url_for('helfer') if current_user.role == 'helfer' else 'kunde')
+   
+    return render_template('profil.html', form=form)

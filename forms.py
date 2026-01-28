@@ -53,3 +53,17 @@ class JobFilterForm(FlaskForm):
     plz = StringField('PLZ filtern', validators=[Optional(), Regexp(r'^\d{5}$', message='PLZ: 5 Ziffern')])
     min_hours = FloatField('Min. Stunden', validators=[Optional(), NumberRange(min=0.5)])
     submit = SubmitField('Suchen')
+
+class ProfileForm(FlaskForm):
+    firstName = StringField("Vorname", validators=[
+        InputRequired(), Length(min=2, max=50)
+    ])
+    name = StringField("Nachname", validators=[
+        InputRequired(), Length(min=2, max=50)
+    ])
+    email = StringField("E-Mail", validators=[
+        InputRequired(), Email(), Length(min=6, max=120)
+    ])
+    phone = StringField("Telefon", validators=[Optional()])
+    birthday = StringField("Geburtstag", validators=[Optional()])
+    submit = SubmitField("Speichern")

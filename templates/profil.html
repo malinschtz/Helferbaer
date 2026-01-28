@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block TITLE %}Profil – Helferbär{% endblock %}
+
+{% block CONTENT %}
+<div class="container mt-4" style="max-width: 600px;">
+  <h1 class="mb-3">Mein Profil</h1>
+
+  <form method="post">
+    {{ form.hidden_tag() }}
+
+    <div class="mb-3">
+      {{ form.firstName.label(class="form-label") }}
+      {{ form.firstName(class="form-control") }}
+      {% for error in form.firstName.errors %}
+        <div class="text-danger small">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      {{ form.name.label(class="form-label") }}
+      {{ form.name(class="form-control") }}
+      {% for error in form.name.errors %}
+        <div class="text-danger small">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      {{ form.birthday.label(class="form-label") }}
+      {{ form.birthday(class="form-control") }}
+      {% for error in form.birthday.errors %}
+        <div class="text-danger small">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      {{ form.email.label(class="form-label") }}
+      {{ form.email(class="form-control") }}
+      {% for error in form.email.errors %}
+        <div class="text-danger small">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      {{ form.phone.label(class="form-label") }}
+      {{ form.phone(class="form-control") }}
+      {% for error in form.phone.errors %}
+        <div class="text-danger small">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+      Profil speichern
+    </button>
+  </form>
+</div>
+{% endblock %}
