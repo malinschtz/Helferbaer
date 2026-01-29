@@ -20,6 +20,7 @@ nav_order: 4
 ## Malin Schütz
 
 Contributions
+: Implementierung der Datenbank
 : Entwicklung und Gestaltung der Frontend-Templates für die Kundenseite, inklusive Dashboard und Formularansichten
 : Implementierung zentraler Backend-Logik in app.py
 : Erstellung und Pflege der Formulare (forms.py) mit Flask-WTF
@@ -29,7 +30,8 @@ Contributions
 
 Contributions
 : Entwicklung und Gestaltung der Frontend-Templates für die Helferseite, inklusive Dashboard und Formularansichten
-: Konzeption und Implementierung des Datenbankmodells (db.py)
+: Konzeption des Datenbankmodells
+: Profile der User, Front- und Backend 
 
 
 ## Gemeinsam:
@@ -37,4 +39,3 @@ Contributions
 Joint Contributions:
 : Entwicklung und Gestaltung UI-Screen
 : Ausfüllen und Überarbeiten der Projekt-Dokumentation (docs)
-: Abstimmung von Datenmodellen und Views
