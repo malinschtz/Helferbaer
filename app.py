@@ -141,13 +141,6 @@ def helfer_stellenangebot():
     
     return render_template('helfer_stellenangebot.html', form=form, jobs=jobs)
 
-@app.route('/helfer/profil', methods=['GET', 'POST'])
-@login_required
-def helfer_profil():
-    if request.method == 'POST':
-        return
-    return 'Helfer Profil'
-
 @app.route('/helfer/kunde_profil/<int:kunde_id>', methods=['GET'])
 @login_required
 def helfer_kunde_profil(kunde_id):
@@ -278,13 +271,6 @@ def kunde_stellenangebot():
     
     return render_template('kunde_stellenangebot.html', form=form)
 
-@app.route('/kunde/profil', methods=['GET', 'POST'])
-@login_required
-def kunde_profil():
-    if request.method == 'POST':
-        return
-    return 'Kunde Profil'
-
 @app.route('/kunde/helfer_profil/<int:helfer_id>', methods=['GET'])
 @login_required
 def kunde_helfer_profil(helfer_id):
@@ -354,8 +340,5 @@ def profil():
             current_user.phone = form.phone.data or None
             db.session.commit()
             flash('Profil erfolgreich aktualisiert!', 'success')
-            
-            # Zurück zum Dashboard
-            return redirect(url_for('helfer') if current_user.role == 'helfer' else 'kunde')
    
     return render_template('profil.html', form=form)
