@@ -104,11 +104,11 @@
                 <div class="card shadow">
                     <div class="card-header bg-success text-white">
                         <div class="d-flex align-items-center justify-content-between">
-                            <a href="" class="btn btn-sm btn-outline-white" title="Vorheriger Monat">
+                            <a href="{{ url_for('kunde', year=prev_month.year, month=prev_month.month) }}" class="btn btn-sm btn-outline" title="Vorheriger Monat">
                                 <i class="bi bi-chevron-left"></i>
                             </a>
                             <h6><i class="bi bi-clock"></i> Stundenkonten - {{ monat_name }}</h6>
-                            <a href="" class="btn btn-sm btn-outline-white" title="Nächster Monat">
+                            <a href="{{ url_for('kunde', year=next_month.year, month=next_month.month) }}" class="btn btn-sm btn-outline" title="Nächster Monat">
                                 <i class="bi bi-chevron-right"></i>
                             </a>
                         </div>
@@ -116,16 +116,16 @@
 
                     <div class="card-body">
                         <div class="text-center mb-4">
-                            <h2 class="text-success fw-bold">{{ "%.1f"|format(hours.gesamt) }} h</h2>
+                            <h2 class="text-success fw-bold">{{ "%.1f"|format(hours['gesamt']) }} h</h2>
                             <span class="badge bg-success">Gesamter Monat</span>
                         </div>
                         <div class="row text-center">
                             <div class="col-6 border-end">
-                                <h3 class="text-primary fw-bold">{{ "%.1f"|format(hours.gebuchte+hours.offene)}} h</h3>
+                                <h3 class="text-primary fw-bold">{{ "%.1f"|format(hours['gebuchte']+hours['offene'])}} h</h3>
                                 <span class="badge bg-primary">Angefragt</span>
                             </div>
                             <div class="col-6">
-                                <h3 class="text-info fw-bold">{{ "%.1f"|format(hours.erledigte) }} h</h3>
+                                <h3 class="text-info fw-bold">{{ "%.1f"|format(hours['erledigte']) }} h</h3>
                                 <span class="badge bg-info">Erledigt</span>
                             </div>
                         </div>

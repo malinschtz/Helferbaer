@@ -5,6 +5,7 @@ from sqlalchemy import select, func
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
 from flask_bcrypt import Bcrypt
 from datetime import date
+from dateutil.relativedelta import relativedelta
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)    #Quelle: Flask-Bcrypt
@@ -45,7 +46,7 @@ def index():
     
     return render_template('index.html')        
 
-@app.route('/helfer/', methods=['GET'])
+@app.route('/helfer/', methods=['GET', 'POST'])
 @login_required
 def helfer():
     if current_user.role != 'helfer':
@@ -53,22 +54,39 @@ def helfer():
         flash('Zugriff verweigert', 'error')
         return render_template('index.html') 
     
-    # Stundenkonto
-    hours = current_user.current_month_hours_helfer
-    DE_MONTHS = {1: 'Januar', 2: 'Februar', 3: 'März', 4: 'April',5: 'Mai', 6: 'Juni', 7: 'Juli', 8: 'August',9: 'September', 10: 'Oktober', 11: 'November', 12: 'Dezember'}
-    monat_name = f"{DE_MONTHS[date.today().month]} {date.today().year}"     #Quelle: Python datetime today, Abschnitt "date Objects"
+    year = request.args.get('year', date.today().year, type=int)
+    month = request.args.get('month', date.today().month, type=int)
+    selected_date = date(year, month, 1)
 
-    # Gebuchte und erledigte Jobs
+    prev_month = selected_date - relativedelta(months=1)
+    next_month = selected_date + relativedelta(months=1)
+
+    hours = current_user.get_month_hours_helfer(year, month)
+
+    DE_MONTHS = {1: 'Januar', 2: 'Februar', 3: 'März', 4: 'April',5: 'Mai', 6: 'Juni', 7: 'Juli', 8: 'August',9: 'September', 10: 'Oktober', 11: 'November', 12: 'Dezember'}
+    monat_name = f"{DE_MONTHS[month]} {year}"
+    prev_month_name = f"{DE_MONTHS[prev_month.month]} {prev_month.year}"
+    next_month_name = f"{DE_MONTHS[next_month.month]} {next_month.year}"
+
+    #Anfragen und Erledigte Jobs
     jobs_data = current_user.get_jobs_by_status_helfer()
     
-    return render_template('helfer_startseite.html', hours=hours, monat_name=monat_name, **jobs_data)   #Quelle: Python Unpacking Operators
+    return render_template('helfer_startseite.html', 
+                           hours=hours, 
+                           monat_name=monat_name, 
+                           prev_month=prev_month, 
+                           next_month=next_month, 
+                           prev_month_name=prev_month_name, 
+                           next_month_name=next_month_name, 
+                           **jobs_data)         #Quelle: Python Unpacking Operators   
+
 
 @app.route('/helfer/anmelden', methods=['GET', 'POST'])
 def helfer_anmelden():
     form = LoginForm()      #Quelle: Kursmaterial User Interfaces, Abschnitt "2"
     if form.validate_on_submit(): # Kombiniert if request.method == 'POST' & if form.validate() Quelle: Flask-WTF, Abschnitt "Validating Forms"
         user = db.session.execute(      #Quelle: Kursmaterial SQLAlchemy, Abschnitt "7"
-            select(User).filter_by(email=form.email.data) #Benutzer suchen nach E-Mail
+            select(User).filter_by(email=form.email.data) 
             ).scalar_one_or_none()      
         if not user:
             flash('Email nicht gefunden. Bitte erst registrieren!', 'error')
@@ -175,7 +193,7 @@ def helfer_job_buchen(job_id):
     flash(f'"{job.description[:30]}..." gebucht! Details im Dashboard.', 'success')
     return redirect(url_for('helfer_stellenangebot'))
 
-@app.route('/kunde/', methods=['GET'])
+@app.route('/kunde/', methods=['GET', 'POST'])
 @login_required
 def kunde():
     if current_user.role != 'kunde':
@@ -184,13 +202,30 @@ def kunde():
         return render_template('index.html') 
     
     #Stundenkonto
-    hours = current_user.current_month_hours_kunde
+    year = request.args.get('year', date.today().year, type=int)
+    month = request.args.get('month', date.today().month, type=int)
+    selected_date = date(year, month, 1)
+
+    prev_month = selected_date - relativedelta(months=1)
+    next_month = selected_date + relativedelta(months=1)
+
+    hours = current_user.get_month_hours_kunde(year, month)
+
     DE_MONTHS = {1: 'Januar', 2: 'Februar', 3: 'März', 4: 'April',5: 'Mai', 6: 'Juni', 7: 'Juli', 8: 'August',9: 'September', 10: 'Oktober', 11: 'November', 12: 'Dezember'}
-    monat_name = f"{DE_MONTHS[date.today().month]} {date.today().year}"
+    monat_name = f"{DE_MONTHS[month]} {year}"
+    prev_month_name = f"{DE_MONTHS[prev_month.month]} {prev_month.year}"
+    next_month_name = f"{DE_MONTHS[next_month.month]} {next_month.year}"
 
     #Anfragen und Erledigte Jobs
     jobs_data = current_user.get_jobs_by_status_kunde()
-    return render_template('kunde_startseite.html', hours=hours, monat_name=monat_name, **jobs_data)
+    return render_template('kunde_startseite.html', 
+                           hours=hours, 
+                           monat_name=monat_name, 
+                           prev_month=prev_month, 
+                           next_month=next_month, 
+                           prev_month_name=prev_month_name, 
+                           next_month_name=next_month_name, 
+                           **jobs_data)
 
 @app.route('/kunde/anmelden', methods=['GET', 'POST'])
 def kunde_anmelden():

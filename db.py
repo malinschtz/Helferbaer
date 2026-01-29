@@ -5,6 +5,7 @@ from flask_login import UserMixin
 from datetime import date, timedelta
 from flask_bcrypt import Bcrypt
 from app import app
+from calendar import monthrange
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///helferbaer.sqlite' 
 
@@ -42,39 +43,73 @@ class User(db.Model, UserMixin):    #Quelle UserMixin: Flask-Login, Abschnitt "Y
     
     #lädt Stunden des aktuellen Monats für Stundenkonto Kunde
     #@property wandelt eine Methode in ein virtuelles Attribut
-    @property   #Quelle: KI Promt 3, Python property-Dekorator
-    def current_month_hours_kunde(self):
-        current_month = date.today().replace(day=1)
-        next_month = (current_month + timedelta(days=32)).replace(day=1)        
-        jobs = [job for job in self.jobs_created if current_month <= job.date < next_month]
+    # @property   #Quelle: KI Promt 3, Python property-Dekorator
+    # def current_month_hours_kunde(self):
+    #     current_month = date.today().replace(day=1)
+    #     next_month = (current_month + timedelta(days=32)).replace(day=1)        
+    #     jobs = [job for job in self.jobs_created if current_month <= job.date < next_month]
         
+    #     offene = sum(job.hours for job in jobs if job.statusId == 1)
+    #     gebuchte = sum(job.hours for job in jobs if job.statusId == 2)
+    #     erledigte = sum(job.realHours or job.hours for job in jobs if job.statusId == 3)
+        
+    #     return {
+    #     'offene': offene,
+    #     'gebuchte': gebuchte, 
+    #     'erledigte': erledigte,
+    #     'gesamt': offene + gebuchte + erledigte
+    # }
+
+    def get_month_hours_kunde(self, year, month):
+        
+        first_day = date(year, month, 1)
+        last_day = date(year, month, monthrange(year, month)[1])
+
+        jobs = [job for job in self.jobs_created if first_day <= job.date <= last_day]
+
         offene = sum(job.hours for job in jobs if job.statusId == 1)
         gebuchte = sum(job.hours for job in jobs if job.statusId == 2)
-        erledigte = sum(job.realHours or job.hours for job in jobs if job.statusId == 3)
-        
+        erledigte = sum(job.realHours for job in jobs if job.statusId == 3)
+    
         return {
-        'offene': offene,
-        'gebuchte': gebuchte, 
-        'erledigte': erledigte,
-        'gesamt': offene + gebuchte + erledigte
-    }
+            'offene': offene,
+            'gebuchte': gebuchte,
+            'erledigte': erledigte,
+            'gesamt': offene + gebuchte + erledigte
+        }
 
-    #lädt Stunden des aktuellen Monats für Stundenkonto Helfer
-    @property
-    def current_month_hours_helfer(self):
-        current_month = date.today().replace(day=1)
-        next_month = (current_month + timedelta(days=32)).replace(day=1)        
-        jobs = [job for job in self.jobs_taken if current_month <= job.date < next_month]
+    # #lädt Stunden des aktuellen Monats für Stundenkonto Helfer
+    # @property
+    # def current_month_hours_helfer(self):
+    #     current_month = date.today().replace(day=1)
+    #     next_month = (current_month + timedelta(days=32)).replace(day=1)        
+    #     jobs = [job for job in self.jobs_taken if current_month <= job.date < next_month]
         
+    #     gebuchte = sum(job.hours for job in jobs if job.statusId == 2)
+    #     erledigte = sum(job.realHours or job.hours for job in jobs if job.statusId == 3)
+        
+    #     return {
+    #     'gebuchte': gebuchte, 
+    #     'erledigte': erledigte,
+    #     'gesamt': gebuchte + erledigte
+    # }
+
+    def get_month_hours_helfer(self, year, month):
+        
+        first_day = date(year, month, 1)
+        last_day = date(year, month, monthrange(year, month)[1])
+
+        jobs = [job for job in self.jobs_taken if first_day <= job.date <= last_day]
+
         gebuchte = sum(job.hours for job in jobs if job.statusId == 2)
-        erledigte = sum(job.realHours or job.hours for job in jobs if job.statusId == 3)
-        
+        erledigte = sum(job.realHours for job in jobs if job.statusId == 3)
+    
         return {
-        'gebuchte': gebuchte, 
-        'erledigte': erledigte,
-        'gesamt': gebuchte + erledigte
-    }
-
+            'gebuchte': gebuchte,
+            'erledigte': erledigte,
+            'gesamt': gebuchte + erledigte
+        }
+    
     #angefragte und erledeigte Jobs für Kunden Dashboard
     def get_jobs_by_status_kunde(self):
         jobs = db.session.execute(select(Job).filter_by(
