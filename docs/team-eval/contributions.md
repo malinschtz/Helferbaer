@@ -33,6 +33,6 @@ Contributions
 
 ## Gemeinsam:
 
-Joint Contributions:
+Joint Contributions
 : Entwicklung und Gestaltung UI-Screen
 : Ausfüllen und Überarbeiten der Projekt-Dokumentation (docs)

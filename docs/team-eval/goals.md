@@ -35,8 +35,11 @@ Folgende Ziele konnten erfolgreich umgesetzt werden:
 + Stundenkonto für Kunden und Helfer
 + Zentrale Navigation und Rollenlogik
 
-[WEIß NICHT OB DAS SO REICHT ODER EHER EIN TEXT BESSER IST]
 
 ## Goals missed / partially achieved
 
-[WEIß NICHT OB HIER UNSERE PRIOTÄTEN REINKOMMEN SOLLEN, WEIL WIR DIE JA EIGENTLICHV BIS ZUR ABGABE NOCH MACHEN, ABER DIE DANN BEI DER ABGABE JA FERTIG SIND. AUßER DU DENKST DA MUSS WAS GANZ ANDERES HINKOMMEN.]
+Wir haben uns an unsere gesetzten Prioritäten bis zur Einreichung gerichtet und dabei versucht viele in der Präsentation geplanten Funktionen umzusetzen. Durch die zeitliche Belastung in der Klausurphase und weitere Studienleistungen konnten wir leider nicht alle geplanten Ziele vollständig umsetzen. 
+
+Hier sind die folgenden Funktionen, die wir nicht umsetzen konnten:
++ Templates benutzbar machen
++ Kunden sollen erstellte Jobs bearbeiten bzw. löschen können

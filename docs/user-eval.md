@@ -28,7 +28,10 @@ Updated
 
 ### Goal
 
-[Describe the goal of this evaluation, for example as a research question like: "How long does it take to register a new account and what is the drop-out rate?"]
+Ziel dieser Evaluation ist es zu untersuchen:
+
+ + wie einfach neue Nutzer (Kunde und Helfer) sich bei HelferBär registrieren können
+ + ob Nutzer danach wissen, wie sie den nächsten Schritt machen -> Kunde: Job erstellen / Helfer: Jobs ansehen
 
 ### Method
 
