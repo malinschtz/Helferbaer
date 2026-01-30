@@ -360,7 +360,7 @@ def logout():
 def profil():
     form = ProfileForm(obj=current_user)   # Felder mit aktuellen Werten füllen
 
-    if form.validate_on_submit():
+    if form.validate_on_submit(): #Quelle: KI Prompt 3
         # 1. Prüfen, ob E-Mail schon von jemand anderem benutzt wird
         existing = db.session.execute(select(User).filter_by(email=form.email.data)).scalar_one_or_none()
 
