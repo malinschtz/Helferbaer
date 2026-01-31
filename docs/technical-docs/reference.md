@@ -236,8 +236,8 @@ Malin Schütz
 {
  "userId": 1, 
  "role": "helfer", 
- "firstName": "Max", 
- "name": "Mustermann", 
+ "firstName": "Leonie", 
+ "name": "Fillon", 
  "period": "2026-01", 
  "hours": { "gebuchte": 4.5, "erledigte": 8.0, "gesamt": 12.5 } 
  }
