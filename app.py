@@ -380,24 +380,16 @@ def profil():
 
 @app.route('/api/hours/<int:user_id>')
 def api_hours(user_id):
-    print(f"DEBUG: User ID {user_id}")
     user = db.session.get(User, user_id)
-    print(f"DEBUG: User gefunden: {user}")
 
     year = request.args.get('year', date.today().year, type=int)
     month = request.args.get('month', date.today().month, type=int)
-    print(f"DEBUG: Jahr/Monat: {year}/{month}")
 
     if user.role == 'kunde':
-        print("DEBUG: kunde-Methode aufrufen...")
         hours_data = user.get_month_hours_kunde(year, month)
-        print(f"DEBUG: kunde hours_data: {hours_data}")
     elif user.role == 'helfer':
-        print("DEBUG: helfer-Methode aufrufen...")
         hours_data = user.get_month_hours_helfer(year, month)
-        print(f"DEBUG: helfer hours_data: {hours_data}")
     
-    print("DEBUG: jsonify aufrufen...")
     return jsonify({        #Quelle: flask.jsonify
         "userId": user.userId,
         "role": user.role,
