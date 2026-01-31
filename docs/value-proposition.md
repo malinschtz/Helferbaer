@@ -51,19 +51,19 @@ Leonie arbeitet als selbstständige Alltagshelferin und betreut mehrere Klient:i
 
 ```mermaid
 flowchart LR  
-	subgraph Anna_Journey["Anna (Kunde)"] 
-		A1[Problem: Brauche Hilfe] --> A2[Registrierung] 
-		A2 --> A3[Job posten] 
-		A3 --> A4[Warten auf Helfer] 
-		A4 --> A5[Buchung erhalten] 
-		A5 --> A6[Stunden tracken] 
+	subgraph Anna_Journey["Anna (Kunde)"]
+		A1([Problem: Brauche Hilfe]) --> A2([Registrierung])
+		A2 --> A3([Job posten])
+		A3 --> A4([Warten auf Helfer]) 
+		A4 --> A5([Buchung erhalten])
+		A5 --> A6([Stunden tracken])
 	end  
-	subgraph Leonie_Journey["Leonie (Helferin)"] 
-		L1[Motivation: Geld verdienen] --> L2[Profil anlegen] 
-		L2 --> L3[Jobs filtern PLZ/Kategorie] 
-		L3 --> L4[Job Details ansehen] 
-		L4 --> L5[Job buchen] 
-		L5 --> L6[Stunden tracken] 
+	subgraph Leonie_Journey["Leonie (Helferin)"]
+		L1([Motivation: Geld verdienen]) --> L2([Profil anlegen])
+		L2 --> L3([Jobs filtern PLZ/Kategorie])
+		L3 --> L4([Job Details ansehen])
+		L4 --> L5([Job buchen])
+		L5 --> L6([Stunden tracken])
 		end  
 	A5 -.Buchung.-> L5
 ```
