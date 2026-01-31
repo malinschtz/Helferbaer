@@ -378,7 +378,7 @@ def profil():
    
     return render_template('profil.html', form=form)
 
-@app.route('/api/hours/<int:user_id>')
+@app.route('/api/hours/<int:user_id>', methods=['GET'])
 def api_hours(user_id):
     user = db.session.get(User, user_id)
 

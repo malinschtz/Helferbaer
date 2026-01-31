@@ -220,3 +220,25 @@ Malin Schütz
 ![helfer()](../assets/images/reference14.png)
 
 ---
+
+## API Stundenkonto (JSON)
+
+### `api_hours(user_id)`
+
+**Route:** `/api/hours/<int:user_id>`
+
+**Methods:** `GET`
+
+**Purpose:** Liefert Stundenkonto-Übersicht als JSON. Nützlich zum Beispiel für Abrechnungen. Query-Parameter `year`/`month` sind optional (Default: aktueller Monat).
+
+**Sample Output:** 
+```json 
+{
+ "userId": 1, 
+ "role": "helfer", 
+ "firstName": "Max", 
+ "name": "Mustermann", 
+ "period": "2026-01", 
+ "hours": { "gebuchte": 4.5, "erledigte": 8.0, "gesamt": 12.5 } 
+ }
+ ```
