@@ -50,7 +50,7 @@ Leonie arbeitet als selbstständige Alltagshelferin und betreut mehrere Klient:i
 
 
 ```mermaid
-graph LR  
+flowchart LR  
 	subgraph Anna_Journey["Anna (Kunde)"] 
 		A1[Problem: Brauche Hilfe] --> A2[Registrierung] 
 		A2 --> A3[Job posten] 
