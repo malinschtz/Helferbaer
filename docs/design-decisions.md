@@ -80,7 +80,7 @@ Wir haben folgende Optionen betrachtet:
 ---
 
 
-## 02: 
+## 02: Rollenmodell & getrennte Dashboards
 
 ### Meta
 
@@ -88,11 +88,55 @@ Status
 : Work in progress - **Decided** - Obsolete
 
 Updated
-: 
+: 31.01.2026
 
 ### Problem statement
 
+Die Anwendung richtet sich an zwei sehr unterschiedliche Nutzergruppen: Menschen mit Pflegegrad (und wahrscheinlich oft geringer Technikaffinität), hier Kunden, und Helfern (jünger und technisch versierter). Beide brauchen ein Dashboard (jedoch mit leicht abgewandelten Jobübersichten --> offene Jobs nur bei Kunden), aber die Funktionen Stellenangebot aufgeben und suchen  unterscheiden sich. Die UI-Screens müssen also unterschiedlich aufgebaut werden, sollten aber technisch trotzdem gut wartbar sein.
+
 ### Decision
 
+Einführung eines Rollenmodells mit zwei Rollen (`kunde`,`helfer`) und getrennten Dashboards: `/kunde/`und `/helfer/`. Die Rolle wird im `User`-Modell gespeichert und alle nur für eine Rolle zugängliche Routen prüfen `current_user.role`. Die Templates sind nach den Rollen getrennt strukturiert (z.B. `kunde_startseite.html` und `helfer_startseite.html`), aber beide erben von derselben `base.html`.  
+
+*Entscheidung getroffen von:* Malin Schütz (github.com/malinschtz), Alisa Puzo (github.com/alisapuzo)
+
 ### Regarded options
+
+Strikte Trennung mit zwei völlig separaten Benutzeroberflächen angepasst auf das technische Know-How der Rollen. Idee verworfen, weil wir Angst hatten, uns zu viel Vorzunehmen.
+
+
+---
+
+
+## 03: Stundenkonto auf Monatsbasis mit Navigation
+
+### Meta
+
+Status
+: Work in progress - **Decided** - Obsolete
+
+Updated
+: 31.01.2026
+
+### Problem statement
+
+Sowohl Kunde als auch Helfer brauchen Transparenz über geleistete und offene Stunden, aber aus unterschiedlichen Perspektiven:
++ Kunde hat offene, gebuchte und erledigte Stunden
++ Helfer hat gebuchte und erledigte Stunden.  
+
+Gleichzeitig soll das UI einfach bleiben (besonders für die älteren Nutzer) und nicht mit komplexen Reports überladen werden.
+
+### Decision
+
+Implementierung eine Monatsstundenkontos, das auf die jeweilige Rolle angepasst ist.  
+Bei Kunden werden die offenen und gebuchten Stunden als **Angefragt** zusammengefasst, damit das Stundenkonto übersichtlich bleibt.  
+Beide Nutzergruppen sehen außerdem die gesamten Stunden des Monats um im Überblick behalten zu können, wie viel sie diesen Monat noch anfragen bzw. buchen können.
+Pfeile links und rechts des aktuellen Monats ermöglichen außerdem eine Navigation zwischen den Monaten, um seine Stunden auch noch nachträglich bzw. bereits im voraus tracken zu können.
+
+*Entscheidung getroffen von:* Malin Schütz (github.com/malinschtz)
+
+### Regarded options
+
+Ich hatte überlegt alle drei Kategorien an Stunden (offen, gebucht, erledigt) + die gesamten Stunden im Stundenkonto der Kunden anzuzeigen, aber mich dagegen entschieden, da es überladen und unübersichtlich wirkte. 
+
 

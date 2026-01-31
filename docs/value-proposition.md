@@ -60,7 +60,7 @@ flowchart LR
 	end  
 	subgraph Leonie_Journey["Leonie (Helferin)"]
 		L1([Motivation: Geld verdienen]) --> L2([Profil anlegen])
-		L2 --> L3([Jobs filtern PLZ/Kategorie])
+		L2 --> L3([Jobs filtern])
 		L3 --> L4([Job Details ansehen])
 		L4 --> L5([Job buchen])
 		L5 --> L6([Stunden tracken])
