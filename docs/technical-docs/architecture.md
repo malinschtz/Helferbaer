@@ -31,7 +31,7 @@ Die Routen unterscheiden unterscheiden explizit zwischen GET- und POST-Requests:
 
 **db.py** definiert das Datenmodell. Es gibt 4 Entitäten:  
 ``User`` (erbt von UserMixin für Flask-Login) speichert Profildaten wie Name Geburtsdatum und Rolle ('kunde' oder 'helfer'). Besonders wichtig sind die beiden Relationships, die ``User`` mit ``Job`` verbindet. Mithilfe von ``jobs_created`` zeigt alle Jobs, die ein User mit der Rolle Kunde erstellt hat (aufrufbar über ``Job.kundeId``), während ``jobs_taken`` alle Jobs enthält, die ein Helfer gebucht hat (aufrufbar über ``Job.helferId``). Diese Beziehungen funktionieren dank ``back_populates`` in beide Richtungen.  
-``User`` enthält außerdem mehrere Hilfsmethoden. ``current_month_hours_kunde`` und ``current_month_hours_helfer`` brechnen dynamisch die Stunden des aktuellen Monats, während die Methoden ``get_jobs_by_status_kunde()`` und ``get_jobs_by_status_helfer()`` die jeweiligen Jobs der Kunden und Helfer aus der DB laden und für die Dashboard-Anzeige gruppieren.  
+``User`` enthält außerdem mehrere Hilfsmethoden. ``get_month_hours_kunde`` und ``get_month_hours_helfer`` brechnen dynamisch die Stunden des ausgewählten Monats, während die Methoden ``get_jobs_by_status_kunde()`` und ``get_jobs_by_status_helfer()`` die jeweiligen Jobs der Kunden und Helfer aus der DB laden und für die Dashboard-Anzeige gruppieren.  
 Außerdem gibt es noch die Entität ``Job``, die alle relevanten Jobdaten enthält (z.B Beschreibung und Datum) sowie die Foreign Keys ``kundeId``, ``helferId``, ``statusId`` und ``catId``.  
 Die Entitäten ``Status`` und ``Category`` definieren die Zustände und Kategorien, die ein Job haben kann.
 
@@ -72,10 +72,10 @@ stateDiagram-v2
 - Gebucht -> Erledigt: POST-Request in ``/kunde/job/<int:job_id>/done`` setzt ``job.statusId=3`` und erfasst ``job.realHours``
 
 ### Stundenkonto
-Die @property-Methoden ``current_month_hours_kunde`` und ``current_month_hours_helfer`` berechnen dynamisch die Stunden des aktuellen Monats. Sie filtern Jobs zwischen dem 1. des aktuellen Monats und dem 1. des Folgemonats.  
+Die Methoden ``get_month_hours_kunde`` und ``get_month_hours_helfer`` berechnen dynamisch die Stunden des ausgewählten Monats. Sie filtern Jobs zwischen dem 1. des ausgewählten Monats und dem 1. des Folgemonats.  
 Für Kunden werden drei Kategorien gebildet: offene Stunden (Jobs mit ``statusId=1``, Column ``hours``), gebuchte (Jobs mit ``statusId=2``, Column ``hours``) und erledigte (Jobs mit ``statusId=3``, Column ``realHours``). Bei Helfern werden nur die Kategorien gebuchte und erledigte Stunden gebildet.
 
-### Template-System für wiederverwendbare Jobs
+### Template-System für wiederverwendbare Stellenangebote
 
-to do
+To-Do
 

@@ -95,9 +95,9 @@ Malin Schütz
 
 **Route:** `/kunde/`
 
-**Methods:** `GET`
+**Methods:** `GET` `POST`
 
-**Purpose:** Zeigt Kunden-Dashboard mit drei Bereichen: Offene/gebuchte Anfragen, erledigte Jobs und Stundenkonto für den aktuellen Monat. Nur für eingeloggte Kunden zugänglich.
+**Purpose:** Zeigt Kunden-Dashboard mit drei Bereichen: Offene/gebuchte Anfragen, erledigte Jobs und Stundenkonto. `GET`rendert Stundenkonto für den aktuellen Monat oder via Query Parameter `year`/`month`für ausgewählten Monat. `POST`verarbeitet die Monatsnavigation über Vor/Zurück-Pfeile. Nur für eingeloggte Kunden zugänglich.
 
 **Sample output:**
 
@@ -153,9 +153,9 @@ Malin Schütz
 
 **Route:** `/helfer/`
 
-**Methods:** `GET`
+**Methods:** `GET` `POST`
 
-**Purpose:** Zeigt Helfer-Dashboard mit drei Bereichen: Gebuchte Anfragen, erledigte Jobs und Stundenkonto für den aktuellen Monat. Nur für eingeloggte Helfer zugänglich.
+**Purpose:** Zeigt Helfer-Dashboard mit drei Bereichen: Gebuchte Anfragen, erledigte Jobs und Stundenkonto. `GET` rendert Dashboard für den aktuellen Monat oder via Query-Parameter `year`/`month`für ausgewählten Monat. `POST`verarbeitet Monatsnavigation über Vor/Zurück-Pfeile. Nur für eingeloggte Helfer zugänglich.
 
 **Sample output:**
 

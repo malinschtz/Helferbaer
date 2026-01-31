@@ -3,9 +3,6 @@ title: Design Decisions
 nav_order: 3
 ---
 
-{: .label }
-[Jane Dane]
-
 {: .no_toc }
 # Design decisions
 
@@ -16,10 +13,12 @@ nav_order: 3
 {: toc }
 </details>
 
+## 01: Datenbankzugriff
+
 ### Meta
 
 Status
-: **Work in progress** - Decided - Obsolete
+: Work in progress - **Decided** - Obsolete
 
 Updated
 : 20.01.2026
@@ -80,4 +79,20 @@ Wir haben folgende Optionen betrachtet:
 
 ---
 
+
+## 02: 
+
+### Meta
+
+Status
+: Work in progress - **Decided** - Obsolete
+
+Updated
+: 
+
+### Problem statement
+
+### Decision
+
+### Regarded options
 
