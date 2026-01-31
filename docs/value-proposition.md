@@ -32,7 +32,7 @@ Anna lebt allein und erhält Unterstützung im Haushalt und bei Erledigungen. Si
 2. Alltagshelfer – Leonie Fillon, 23 Jahre  
 Leonie arbeitet als selbstständige Alltagshelferin und betreut mehrere Klient:innen pro Woche. Sie möchte ihre Einsätze übersichtlich planen, Änderungen schnell abstimmen und klare Informationen zu Aufgaben erhalten und das alles an einem zentralen Ort, statt über viele verschiedene Kanäle.
 
-## Customer journey
+## Customer Journey
 
 1. Pflegebedürftige Person
 
@@ -48,3 +48,22 @@ Leonie arbeitet als selbstständige Alltagshelferin und betreut mehrere Klient:i
     + Job buchen: Bei passenden Angeboten bucht sie mit einem Klick den Job von Anna.
     + Stunden im Blick halten: Im Stundenkonto kann sie gut im Blick behalten wie viele Stunden diesen Monat schon erledigt wurden und wie viele noch offen sind.
 
+
+```mermaid
+graph LR  
+	subgraph Anna_Journey["Anna (Kunde)"] 
+		A1[Problem: Brauche Hilfe] --> A2[Registrierung] 
+		A2 --> A3[Job posten] 
+		A3 --> A4[Warten auf Helfer] 
+		A4 --> A5[Buchung erhalten ✓] 
+		A5 --> A6[Stunden tracken] 
+	end  
+	subgraph Leonie_Journey["Leonie (Helferin)"] 
+		L1[Motivation: Geld verdienen] --> L2[Profil anlegen] 
+		L2 --> L3[Jobs filtern PLZ/Kategorie] 
+		L3 --> L4[Job Details ansehen] 
+		L4 --> L5[Job buchen ✓] 
+		L5 --> L6[Stunden tracken] 
+		end  
+	A5 -.Buchung.-> L5
+```
