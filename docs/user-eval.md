@@ -3,9 +3,6 @@ title: User Evaluation
 nav_order: 5
 ---
 
-{: .label }
-[Jane Dane]
-
 {: .no_toc }
 # User evaluation
 
@@ -86,4 +83,3 @@ ToDo
 
 ToDo
 
----
