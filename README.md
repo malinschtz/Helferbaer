@@ -7,6 +7,21 @@ Web Applikation, die eine Plattform als Schnittstelle zwischen Alttagshelfer und
 
 2. Installiere alle benötigten Packages mithilfe des Terminal und dem Command `pip install -r requirements.txt`
 
-3. Initialisiere die Datenbank der App mit dem Command `flask init-db`
+3. Initialisiere die Datenbank der App mit dem Command `flask init-db` und füge die Sample-Daten mit dem Command `flask insert-sample` ein
 
-4. Wenn du möchtest füge die Sample-Daten mit dem Command `ìnsert-sample`
+4. Starte den Web-Server mit dem Command `flask run`
+
+5. Es gibt bereits 4 User, die mit den Sample Daten erstellet wurden:
+
+Helfer Accounts: 
++ leoniefillon@gmail.com
++ dennisschröder@gmail.com
+
+Kunden Accounts
++ silviasteini@gmail.com
++ hildahenne@gmail.com
+
+Passwort bei allen: 12345678 
+
+
+
