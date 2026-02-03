@@ -30,6 +30,6 @@ nav_order: 7
 
 
 ## KI-Promts
-+ [**KI Prompt 1**](Helferbaer/assets/files/KI-Prompt_1.pdf)
++ [**KI Prompt 1**](/assets/files/KI-Prompt_1.pdf)
 + [**KI Prompt 2**](/assets/files/KI-Prompt_2.pdf)
-+ [**KI Prompt 3**](Helferbaer/assets/files/KI-Prompt_3.pdf)
++ [**KI Prompt 3**](/assets/files/KI-Prompt_3.pdf)
