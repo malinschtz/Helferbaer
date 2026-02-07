@@ -30,6 +30,6 @@ nav_order: 7
 
 
 ## KI-Promts
-+ [**KI Prompt 1**](/assets/files/KI-Prompt_1.pdf)
-+ [**KI Prompt 2**](/assets/files/KI-Prompt_2.pdf)
-+ [**KI Prompt 3**](/assets/files/KI-Prompt_3.pdf)
++ [**KI Prompt 1**](https://www.perplexity.ai/search/app-route-helfer-stellenangebo-wXixA8xlQKmYqTMKKPu64Q#0) ([**PDF**](/assets/files/KI-Prompt_1.pdf))
++ [**KI Prompt 2**](https://www.perplexity.ai/search/notimplementederror-notimpleme-In67YTr8S0OU_RPF9Lyckg?sm=d) ([**PDF**](/assets/files/KI-Prompt_2.pdf))
++ [**KI Prompt 3**]() ([**PDF**](/assets/files/KI-Prompt_3.pdf))
